@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/editword_navigation"
+    app:startDestination="@id/editword_fragment">
+    <fragment
+        android:id="@+id/editword_fragment"
+        android:name = "com.sbaygildin.pushwords.editword.EditwordFragment"
+        android:label="Editword"
+        tools:layout="@layout/fragment_editword">
+        <deepLink
+            app:uri="android-app://com.sbaygildin.pushwords.editword/editword_fragment" />
+    </fragment>
+</navigation>

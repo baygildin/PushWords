@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/progress_navigation"
+    app:startDestination="@id/progress_fragment">
+    <fragment
+        android:id="@+id/progress_fragment"
+        android:name = "com.sbaygildin.pushwords.progress.ProgressFragment"
+        android:label="Progress"
+        tools:layout="@layout/fragment_progress">
+        <deepLink
+            app:uri="android-app://com.sbaygildin.pushwords.progress/progress_fragment" />
+    </fragment>
+</navigation>
+

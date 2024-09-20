@@ -1,0 +1,125 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sbaygildin.pushwords.home.HomeFragment">
+
+    <TextView
+        android:id="@+id/tv_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_lets_start_quiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:text="Давай начнем квиззз"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_name" />
+
+    <TextView
+        android:id="@+id/tv_original_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="Текст1 (слово на родном/иностранном языке)"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/word_buttons_grid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lets_start_quiz" />
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/word_buttons_grid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="120dp"
+        app:alignmentMode="alignMargins"
+        app:columnCount="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_original_word"
+        app:rowCount="2"
+        app:useDefaultMargins="true">
+
+        <Button
+            android:id="@+id/btn_option_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_neumorphism"
+            android:text="Слово 1"
+            android:textColor="@color/main_text_color"
+            android:textSize="16sp"
+            app:layout_column="0"
+            app:layout_row="0" />
+
+
+        <Button
+            android:id="@+id/btn_option_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_neumorphism"
+            android:text="Слово 2"
+            android:textColor="@color/main_text_color"
+            android:textSize="16sp"
+            app:layout_column="1"
+            app:layout_row="0" />
+
+        <Button
+            android:id="@+id/btn_option_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_neumorphism"
+            android:text="Слово 3"
+            android:textColor="@color/main_text_color"
+            android:textSize="16sp"
+            app:layout_column="0"
+            app:layout_row="1" />
+
+        <Button
+            android:id="@+id/btn_option_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_neumorphism"
+            android:text="Слово 4"
+            android:textColor="@color/main_text_color"
+            android:textSize="16sp"
+            app:layout_column="1"
+            app:layout_row="1" />
+    </androidx.gridlayout.widget.GridLayout>
+
+    <Button
+        android:id="@+id/btn_add_new_word"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="96dp"
+        android:background="@drawable/outline_note_stack_add_24"
+        android:textColor="@color/main_text_color"
+        android:textSize="15sp"
+        android:contentDescription="@string/add_a_new_word"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/home_navigation">
+
+    <include app:graph="@navigation/home_navigation" />
+    <include app:graph="@navigation/progress_navigation" />
+    <include app:graph="@navigation/settings_navigation" />
+    <include app:graph="@navigation/editword_navigation" />
+    <include app:graph="@navigation/addword_navigation" />
+    <include app:graph="@navigation/wordlist_navigation" />
+
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.sbaygildin.pushwords.home.HomeFragment"
+        android:label="Home" >
+        <action
+            android:id="@+id/navigateHomeToAddwordWoArgs"
+            app:destination="@id/addword_fragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/progress_fragment"
+        android:name="com.sbaygildin.pushwords.progress.ProgressFragment"
+        android:label="Progress" >
+    </fragment>
+    <fragment
+        android:id="@+id/addword_fragment"
+        android:name="com.sbaygildin.pushwords.addword.AddwordFragment"
+        android:label="Addword" >
+    </fragment>
+    <fragment
+        android:id="@+id/editword_fragment"
+        android:name="com.sbaygildin.pushwords.editword.EditwordFragment"
+        android:label="Editword" >
+    </fragment>
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="com.sbaygildin.pushwords.settings.SettingsFragment"
+        android:label="Settings" >
+    </fragment>
+    <fragment
+        android:id="@+id/wordlist_fragment"
+        android:name="com.sbaygildin.pushwords.wordlist.WordlistFragment"
+        android:label="My vocabulary" >
+    </fragment>
+</navigation>

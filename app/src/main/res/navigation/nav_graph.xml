@@ -14,36 +14,73 @@
 
 
     <fragment
-        android:id="@+id/home_fragment"
+        android:id="@id/HomeFragment"
         android:name="com.sbaygildin.pushwords.home.HomeFragment"
-        android:label="Home" >
+        android:label="Home">
         <action
-            android:id="@+id/navigateHomeToAddwordWoArgs"
-            app:destination="@id/addword_fragment"/>
+            android:id="@+id/navigateHomeToSettingsArgs"
+            app:destination="@id/SettingsFragment"
+            app:popUpTo="@id/HomeFragment"
+            app:popUpToInclusive="false">
+            <argument
+                android:name="exampleArg"
+                android:defaultValue="common nav graf home fragment"
+                app:argType="string" />
+        </action>
+        <action
+            android:id="@+id/navigateHomeToSettingsWoArgs"
+            app:destination="@id/SettingsFragment"
+            app:popUpTo="@id/HomeFragment"
+            app:popUpToInclusive="false">
+
+        </action>
     </fragment>
+    <action
+        android:id="@+id/navigateHomeToSettingsWoArgs"
+        app:destination="@id/SettingsFragment"
+        app:popUpTo="@id/HomeFragment"
+        app:popUpToInclusive="false" />
+    <action
+        android:id="@+id/navigateHomeToSettingsArgs"
+        app:destination="@id/SettingsFragment"
+        app:popUpTo="@id/HomeFragment"
+        app:popUpToInclusive="false">
+        <argument
+            android:name="exampleArg"
+            android:defaultValue="common nav graf home fragment"
+            app:argType="string" />
+    </action>
+
+    <fragment
+        android:id="@id/SettingsFragment"
+        android:name="com.sbaygildin.pushwords.settings.SettingsFragment"
+        android:label="Settings">
+        <argument
+            android:name="exampleArg"
+            android:defaultValue="SettingsFragment In nav_graph"
+            app:argType="string" />
+    </fragment>
+
+
     <fragment
         android:id="@+id/progress_fragment"
         android:name="com.sbaygildin.pushwords.progress.ProgressFragment"
-        android:label="Progress" >
+        android:label="Progress">
+
     </fragment>
     <fragment
         android:id="@+id/addword_fragment"
         android:name="com.sbaygildin.pushwords.addword.AddwordFragment"
-        android:label="Addword" >
+        android:label="Addword">
+
     </fragment>
     <fragment
         android:id="@+id/editword_fragment"
         android:name="com.sbaygildin.pushwords.editword.EditwordFragment"
-        android:label="Editword" >
-    </fragment>
-    <fragment
-        android:id="@+id/settings_fragment"
-        android:name="com.sbaygildin.pushwords.settings.SettingsFragment"
-        android:label="Settings" >
-    </fragment>
+        android:label="Editword"></fragment>
+
     <fragment
         android:id="@+id/wordlist_fragment"
         android:name="com.sbaygildin.pushwords.wordlist.WordlistFragment"
-        android:label="My vocabulary" >
-    </fragment>
+        android:label="My vocabulary"></fragment>
 </navigation>

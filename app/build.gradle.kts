@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("androidx.navigation.safeargs.kotlin")
+    alias(libs.plugins.androidx.navigation.safeargs)
+
 
 }
 
@@ -58,11 +59,4 @@ dependencies {
     implementation(project(":feature:editword"))
     implementation(project(":feature:progress"))
     implementation(project(":navigation"))
-
-    val nav_version = "2.8.1"
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
-    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
-
 }

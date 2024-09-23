@@ -10,12 +10,12 @@
         android:title="@string/menu_progress" />
 
     <item
-        android:id="@+id/settings_navigation"
+        android:id="@id/settings_navigation"
         android:icon="@drawable/rounded_settings_24"
         android:title="@string/menu_settings" />
 
     <item
-        android:id="@+id/wordlist_navigation"
+        android:id="@id/wordlist_navigation"
         android:icon="@drawable/rounded_format_list_bulleted_24"
         android:title="@string/menu_vocabulary" />
 </menu>

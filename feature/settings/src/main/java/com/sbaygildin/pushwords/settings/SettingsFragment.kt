@@ -6,18 +6,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
+import androidx.navigation.fragment.findNavController
+
+import com.sbaygildin.pushwords.settings.databinding.FragmentSettingsBinding
+
+import com.sbaygildin.pushwords.settings.R
+
+import com.sbaygildin.pushwords.navigation.Navigator
 
 class SettingsFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = SettingsFragment()
-    }
-
     private val viewModel: SettingsViewModel by viewModels()
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
+    private val args: SettingsFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // TODO: Use the ViewModel
     }
 
@@ -25,6 +30,20 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val exampleArg = args.exampleArg // Получаете переданный аргумент
+        exampleArg.also { binding.tvSettingsTitle.text = it }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

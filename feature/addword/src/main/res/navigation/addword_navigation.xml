@@ -10,6 +10,7 @@
         android:label="Addword"
         tools:layout="@layout/fragment_addword">
         <deepLink
+            android:id="@+id/deepLinkAddwordFragment"
             app:uri="android-app://com.sbaygildin.pushwords.addword/addword_fragment" />
     </fragment>
 </navigation>

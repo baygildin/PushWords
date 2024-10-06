@@ -11,6 +11,7 @@
         tools:layout="@layout/fragment_wordlist">
         <deepLink
             app:uri="android-app://com.sbaygildin.pushwords.wordlist/wordlist_fragment" />
+
     </fragment>
 </navigation>
 

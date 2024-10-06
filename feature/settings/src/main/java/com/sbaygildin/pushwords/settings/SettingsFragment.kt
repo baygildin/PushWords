@@ -2,29 +2,30 @@ package com.sbaygildin.pushwords.settings
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.navArgs
-import androidx.navigation.fragment.findNavController
-
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.SeekBar
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.sbaygildin.pushwords.settings.databinding.FragmentSettingsBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.intellij.lang.annotations.Language
+import java.util.Locale
 
-import com.sbaygildin.pushwords.settings.R
-
-import com.sbaygildin.pushwords.navigation.Navigator
-
+@AndroidEntryPoint
 class SettingsFragment : Fragment() {
+
     private val viewModel: SettingsViewModel by viewModels()
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
-    private val args: SettingsFragmentArgs by navArgs()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // TODO: Use the ViewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,16 +35,121 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val exampleArg = args.exampleArg // Получаете переданный аргумент
-        exampleArg.also { binding.tvSettingsTitle.text = it }
+        observeSettings()
+        setupListeners()
     }
+
+    private fun observeSettings() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.darkMode.collectLatest { isDarkMode ->
+                        binding.isDarkModeEnabled.isChecked = isDarkMode
+                    }
+                }
+                launch {
+                    viewModel.language.collectLatest { selectedLanguage ->
+                        val languages = resources.getStringArray(R.array.languages)
+                        val index = languages.indexOf(selectedLanguage)
+                        if (index >= 0) {
+                            binding.spinnerLanguage.setSelection(index)
+                        }
+                    }
+                }
+                launch {
+                    viewModel.notifications.collectLatest { isEnabled ->
+                        binding.switchNotifications.isChecked = isEnabled
+                    }
+                }
+                launch {
+                    viewModel.volume.collectLatest { volume ->
+                        val progress = (volume * 100).toInt()
+                        binding.seekbarVolume.progress = progress
+                    }
+                }
+                launch {
+                    viewModel.userName.collectLatest { name ->
+                        binding.edittextUserName.setText(name)
+                        binding.tvUserNameDisplay.text = "Ваше имя: $name"
+                    }
+                }
+
+            }
+        }
+    }
+
+    private fun setupListeners() {
+        binding.spinnerLanguage.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedLanguage = resources.getStringArray(R.array.languages)[position]
+                    viewModel.setLanguage(selectedLanguage)
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
+
+        binding.spinnerLanguage.adapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.languages,
+            android.R.layout.simple_spinner_item
+        )
+            .apply {
+                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            }
+        binding.saveNameButton.setOnClickListener {
+
+            val currentName = binding.edittextUserName.text.toString().trim()
+            if (currentName != viewModel.userName.value ) {
+                viewModel.setUserName(currentName)
+                binding.edittextUserName.setText("")
+            }
+        }
+
+
+
+
+
+        binding.isDarkModeEnabled.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setDarkMode(isChecked)
+            val notificationController = activity as? NotificationController
+            notificationController?.updateTheme(isChecked)
+        }
+
+        binding.switchNotifications.setOnCheckedChangeListener { _, isChecked ->
+            val notificationController = activity as? NotificationController
+            viewModel.setNotifications(isChecked)
+            if (isChecked) {
+                notificationController?.scheduleQuizNotification()
+            } else {
+                notificationController?.cancelQuizNotification()
+            }
+        }
+
+        binding.seekbarVolume.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekbar: SeekBar?, progress: Int, fromUser: Boolean) {}
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                val finalVolume = seekBar?.progress?.div(100f) ?: 0.5f
+                viewModel.setVolume(finalVolume)
+            }
+        })
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+
+
+
+
+

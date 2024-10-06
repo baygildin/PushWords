@@ -4,14 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings_navigation"
     app:startDestination="@id/SettingsFragment">
+
     <fragment
         android:id="@+id/SettingsFragment"
-        android:name = "com.sbaygildin.pushwords.settings.SettingsFragment"
+        android:name="com.sbaygildin.pushwords.settings.SettingsFragment"
         android:label="Settings"
         tools:layout="@layout/fragment_settings">
+        <deepLink
+            android:id="@+id/deepLinkSettingsFragment"
+            app:uri="android-app://com.sbaygildin.pushwords.settings/SettingsFragment" />
         <argument
             android:name="exampleArg"
-            android:defaultValue="nav graph SettingsFragment"
+            android:defaultValue="SettingsFragment In nav_graph"
             app:argType="string" />
     </fragment>
 

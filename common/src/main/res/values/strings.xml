@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">PushWords</string>
     <string name="add_a_new_word">Add a new word</string>
+    <string name="add_word_button">Add a new word</string>
 </resources>

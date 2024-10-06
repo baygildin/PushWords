@@ -6,26 +6,75 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sbaygildin.pushwords.wordlist.R
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.sbaygildin.pushwords.navigation.Navigator
+import com.sbaygildin.pushwords.wordlist.databinding.FragmentWordlistBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-class WordlistFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = WordlistFragment()
-    }
-
+@AndroidEntryPoint
+class WordlistFragment : Fragment(R.layout.fragment_wordlist) {
     private val viewModel: WordlistViewModel by viewModels()
+    private var _binding: FragmentWordlistBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
+    private val wordlistAdapter = WordlistAdapter(
+        onEditClick = { word ->
+            (activity as Navigator).navigateWordlistToEdit(word.id.toString())
+        },
+        onDeleteClick = { word ->
+            lifecycleScope.launch {
+                val rowsDeleted = viewModel.deleteWord(word.id)
+                if (rowsDeleted > 0) {
+                    Toast.makeText(
+                        requireContext(),
+                        "${word.originalWord} - ${word.translatedWord} удалено из словаря!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Ошибка при удалении слова!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_wordlist, container, false)
+        _binding = FragmentWordlistBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        lifecycleScope.launch {
+            viewModel.wordList.collect { words ->
+                wordlistAdapter.setWords(words)
+            }
+        }
+
+        binding.addWordButton.setOnClickListener {
+            (activity as Navigator).navigateWordlistToAddword()
+        }
+    }
+
+    private fun setupRecyclerView() {
+        binding.wordListRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = wordlistAdapter
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

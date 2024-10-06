@@ -1,13 +1,88 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".EditwordFragment">
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/design_default_color_primary">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Editword Fragment" />
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
-</FrameLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/originalWordInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/originalWordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Original Word" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/translatedWordInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/originalWordInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/translatedWordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Translated Word" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/isLearnedCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Is Learned"
+            app:layout_constraintTop_toBottomOf="@id/translatedWordInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <Spinner
+            android:id="@+id/difficultyLevelSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/isLearnedCheckBox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            app:layout_constraintTop_toBottomOf="@id/difficultyLevelSpinner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cancelButton"
+            android:layout_marginTop="24dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            app:layout_constraintTop_toBottomOf="@id/difficultyLevelSpinner"
+            app:layout_constraintStart_toEndOf="@id/saveButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="24dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

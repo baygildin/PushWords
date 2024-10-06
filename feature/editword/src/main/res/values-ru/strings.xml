@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PushWords</string>
+    <string name="toast_word_not_found">Слово не найдено</string>
+    <string name="tv_this_field_is_required">Это поле необходимо заполнить</string>
 </resources>

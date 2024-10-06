@@ -8,13 +8,22 @@
     <color name="text_color">#FAEFD9</color>
     <color name="text_color_edit_message">#2B3342</color>
     <color name="title_text_color">#FAEFD9</color>
-
-
     <color name="primary_light">#6200EE</color>
     <color name="secondary_light">#03DAC5</color>
     <color name="background_light">#F5F5F5</color>
-
     <color name="primary_dark">#BB86FC</color>
     <color name="secondary_dark">#03DAC6</color>
     <color name="background_dark">#121212</color>
+
+    <!-- Другие цвета для темного режима -->
+    <color name="primaryColorDark">#121212</color>
+    <color name="primaryDarkColorDark">#1A1A1A</color>
+    <color name="secondaryColorDark">#BB86FC</color>
+    <color name="dark_background">#121212</color>
+    <color name="dark_onSurface">#E0E0E0</color>
+    <color name="dark_primary">#1E88E5</color>
+    <color name="dark_onPrimary">#FFFFFF</color>
+    <color name="dark_secondary">#00ACC1</color>
+    <color name="dark_onSecondary">#000000</color>
+
 </resources>

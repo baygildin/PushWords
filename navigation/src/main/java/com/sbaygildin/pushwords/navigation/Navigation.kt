@@ -1,6 +1,9 @@
 package com.sbaygildin.pushwords.navigation
 
+
 interface Navigator {
-    fun navigateHomeToSettingsArgs(x: String)
-    fun navigateHomeToSettingsWoArgs()
+    fun navigateHomeFragmentToSettingsFragment(s: String)
+    fun navigateWordlistToEdit(id: String)
+    fun navigateWordlistToAddword()
+    fun navigateHomeToAddword()
 }

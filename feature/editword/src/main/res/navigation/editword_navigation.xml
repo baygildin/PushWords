@@ -9,7 +9,12 @@
         android:name = "com.sbaygildin.pushwords.editword.EditwordFragment"
         android:label="Editword"
         tools:layout="@layout/fragment_editword">
+        <argument
+            android:name="id"
+            android:defaultValue="0L"
+            app:argType="string" />
         <deepLink
-            app:uri="android-app://com.sbaygildin.pushwords.editword/editword_fragment" />
+            android:id="@+id/deepLinkEditwordFragment"
+            app:uri="android-app://com.sbaygildin.pushwords.editword/EditwordFragment" />
     </fragment>
 </navigation>

@@ -16,71 +16,135 @@
     <fragment
         android:id="@id/HomeFragment"
         android:name="com.sbaygildin.pushwords.home.HomeFragment"
-        android:label="Home">
-        <action
-            android:id="@+id/navigateHomeToSettingsArgs"
-            app:destination="@id/SettingsFragment"
-            app:popUpTo="@id/HomeFragment"
-            app:popUpToInclusive="false">
-            <argument
-                android:name="exampleArg"
-                android:defaultValue="common nav graf home fragment"
-                app:argType="string" />
-        </action>
-        <action
-            android:id="@+id/navigateHomeToSettingsWoArgs"
-            app:destination="@id/SettingsFragment"
-            app:popUpTo="@id/HomeFragment"
-            app:popUpToInclusive="false">
-
-        </action>
-    </fragment>
-    <action
-        android:id="@+id/navigateHomeToSettingsWoArgs"
-        app:destination="@id/SettingsFragment"
-        app:popUpTo="@id/HomeFragment"
-        app:popUpToInclusive="false" />
-    <action
-        android:id="@+id/navigateHomeToSettingsArgs"
-        app:destination="@id/SettingsFragment"
-        app:popUpTo="@id/HomeFragment"
-        app:popUpToInclusive="false">
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
         <argument
             android:name="exampleArg"
             android:defaultValue="common nav graf home fragment"
             app:argType="string" />
-    </action>
+        <deepLink
+            android:id="@+id/deepLinkHomeFragment"
+            app:uri="android-app://com.sbaygildin.pushwords.home/HomeFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@id/SettingsFragment"
         android:name="com.sbaygildin.pushwords.settings.SettingsFragment"
-        android:label="Settings">
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings">
+        <deepLink
+            android:id="@+id/deepLinkSettingsFragment"
+            app:uri="android-app://com.sbaygildin.pushwords.settings/SettingsFragment" />
         <argument
             android:name="exampleArg"
             android:defaultValue="SettingsFragment In nav_graph"
             app:argType="string" />
     </fragment>
 
-
     <fragment
         android:id="@+id/progress_fragment"
         android:name="com.sbaygildin.pushwords.progress.ProgressFragment"
-        android:label="Progress">
+        android:label="Progress"
+        tools:layout="@layout/fragment_progress">
+        <deepLink
+            android:id="@+id/deepLinkProgressFragment"
+            app:uri="android-app://com.sbaygildin.pushwords.progress/ProgressFragment" />
 
     </fragment>
     <fragment
         android:id="@+id/addword_fragment"
         android:name="com.sbaygildin.pushwords.addword.AddwordFragment"
-        android:label="Addword">
+        android:label="Addword"
+        tools:layout="@layout/fragment_addword">
+
+        <deepLink
+            android:id="@+id/deepLinkAddwordFragment"
+            app:uri="android-app://com.sbaygildin.pushwords.addword/AddwordFragment" />
 
     </fragment>
-    <fragment
-        android:id="@+id/editword_fragment"
-        android:name="com.sbaygildin.pushwords.editword.EditwordFragment"
-        android:label="Editword"></fragment>
+
 
     <fragment
         android:id="@+id/wordlist_fragment"
         android:name="com.sbaygildin.pushwords.wordlist.WordlistFragment"
-        android:label="My vocabulary"></fragment>
+        android:label="My vocabulary"
+        tools:layout="@layout/fragment_wordlist">
+        <deepLink
+            android:id="@+id/deepLinkWordlistFragment"
+            app:uri="android-app://com.sbaygildin.pushwords.wordlist/WordlistFragment" />
+        <action
+            android:id="@+id/navigateWordlistToEdit"
+            app:destination="@id/editword_fragment"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="false">
+            <argument
+                android:name="id"
+                android:defaultValue="0L"
+                app:argType="string" />
+
+        </action>
+        <action
+            android:id="@+id/navigateWordlistToAddword"
+            app:destination="@id/addword_fragment"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="false"/>
+    </fragment>
+    <fragment
+        android:id="@+id/editword_fragment"
+        android:name="com.sbaygildin.pushwords.editword.EditwordFragment"
+        android:label="Editword"
+        tools:layout="@layout/fragment_editword">
+        <argument
+            android:name="id"
+            android:defaultValue="0L"
+            app:argType="string" />
+
+
+        <deepLink
+            android:id="@+id/deepLinkEditwordFragment"
+            app:uri="android-app://com.sbaygildin.pushwords.editword/EditwordFragment" />
+    </fragment>
+
+    <action
+        android:id="@+id/navigateWordlistToEdit"
+        app:destination="@id/editword_fragment"
+        app:launchSingleTop="true"
+        app:popUpToInclusive="false">
+        <argument
+            android:name="id"
+            android:defaultValue="0L"
+            app:argType="string" />
+
+    </action>
+    <action
+        android:id="@+id/navigateHomeToAddword"
+        app:destination="@id/addword_fragment"
+        app:launchSingleTop="true"
+        app:popUpToInclusive="false" />
+    <action
+        android:id="@+id/actionSettingsFragmentToHomeFragment"
+        app:destination="@id/HomeFragment"
+        app:launchSingleTop="true"
+        app:popUpToInclusive="false" />
+    <action
+        android:id="@+id/navigateHomeToSettingsWoArgs"
+        app:destination="@id/SettingsFragment"
+        app:launchSingleTop="true"
+        app:popUpToInclusive="false" />
+    <action
+        android:id="@+id/actionHomeFragmenttoSettingsFragment"
+        app:destination="@id/SettingsFragment"
+        app:launchSingleTop="true"
+        app:popUpToInclusive="false">
+        <argument
+            android:name="exampleArg"
+            android:defaultValue="common nav graf home fragment"
+            app:argType="string" />
+    </action>
+    <action
+        android:id="@+id/navigateWordlistToAddword"
+        app:destination="@id/addword_fragment"
+        app:launchSingleTop="true"
+        app:popUpToInclusive="false"/>
 </navigation>

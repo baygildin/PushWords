@@ -15,5 +15,14 @@
     <color name="primary_dark">#BB86FC</color>
     <color name="secondary_dark">#03DAC6</color>
     <color name="background_dark">#121212</color>
+    <color name="green_yellow">#b5ca75</color>
+    <color name="light_shade_of_purple_blue">#b8a9eb</color>
+
+
+
+
+    <color name="purple_200">#BB86FC</color>
+    <color name="teal_700">#018786</color>
+
 
 </resources>

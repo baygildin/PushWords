@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("androidx.navigation.safeargs.kotlin")
+    alias(libs.plugins.androidx.navigation.safeargs)
+    alias(libs.plugins.org.jetbrains.kotlin.kapt)
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -41,6 +43,9 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    val hilt_version = "2.51.1"
+    implementation("com.google.dagger:hilt-android:$hilt_version")
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
     implementation(libs.material)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.lifecycle.livedata.ktx)
@@ -52,6 +57,13 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
+    val coroutines_version = "1.9.0"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
+    implementation(project(":navigation"))
+    implementation(project(":data:di"))
+    implementation(project(":data:model"))
+    implementation(project(":common"))
 
     val nav_version = "2.8.1"
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
@@ -60,3 +72,8 @@ dependencies {
     androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
     
 }
+kapt {
+    correctErrorTypes = true
+}
+apply(plugin = "kotlin-kapt")
+

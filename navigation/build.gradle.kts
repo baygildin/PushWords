@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.androidx.navigation.safeargs)
+    alias(libs.plugins.org.jetbrains.kotlin.kapt)
 }
 
 android {
@@ -36,6 +38,9 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    implementation(project(":data:model"))
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -43,3 +48,7 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 }
+kapt {
+    correctErrorTypes = true
+}
+apply(plugin = "kotlin-kapt")

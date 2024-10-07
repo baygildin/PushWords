@@ -1,6 +1,5 @@
 package com.sbaygildin.pushwords.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sbaygildin.pushwords.data.di.AppPreferencesManager
@@ -27,6 +26,8 @@ class HomeViewModel @Inject constructor(
     var guessedRightAway = 0 //Количество угаданных ответов с первого раза
     var learnedWords = 0 //Количество новых изученных слов. isLearned должен быть false  у них
     var  wordCache: List<WordTranslation> = emptyList()
+    //Сделай Массив, чтоб быстрее работало. Все равно знаешь размер
+    val languageForRiddles: Flow<String> = preferencesManager.languageForRiddlesFlow
 
 
 
@@ -44,14 +45,6 @@ class HomeViewModel @Inject constructor(
     fun getCachedWords(): List<WordTranslation> {
         return wordCache
     }
-    suspend fun getUnlearnedWords() = wordTranslationDao.getUnlearnedWords()
-
-
-    fun getAllWords(): Flow<List<WordTranslation>> = wordTranslationDao.getAllWordTranslations()
-
-
-
-
     fun recordProgressData(correct: Int, wrong: Int, guessedRightAway: Int, learnedWords: Int) {
         viewModelScope.launch {
             val progressData = ProgressData(

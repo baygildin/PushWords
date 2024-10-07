@@ -20,6 +20,7 @@ class SettingsViewModel @Inject constructor(
     val language: Flow<String> = preferencesManager.languageFlow
     val notifications: Flow<Boolean> = preferencesManager.notificationsFlow
     val volume: Flow<Float> = preferencesManager.volumeFlow
+    val languageForRiddles: Flow<String> = preferencesManager.languageForRiddlesFlow
 
     //    val userName: Flow<String> = preferencesManager.userNameFlow
     val userName: StateFlow<String?> = preferencesManager.userNameFlow.stateIn(
@@ -35,6 +36,11 @@ class SettingsViewModel @Inject constructor(
     fun setLanguage(language: String) {
         viewModelScope.launch {
             preferencesManager.setLanguage(language)
+        }
+    }
+    fun setLanguageForRiddles(language: String) {
+        viewModelScope.launch {
+            preferencesManager.saveLanguageForRiddles(language)
         }
     }
 

@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -66,7 +68,6 @@ class ProgressFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.userName.collectLatest { name ->
                 userName = if (name == "") "" else name + "!\n"
-                Log.d("sdsdads", "$name dfsdfsd")
                 val progressText = userName + """
             Ваш прогресс:
             Вы выучили $totalLearnedWords новых слов(а)!
@@ -75,7 +76,8 @@ class ProgressFragment : Fragment() {
         """.trimIndent()
 
                 binding?.let { safeBinding ->
-                    safeBinding.tvTotalLearnedWords.text = progressText }
+                    safeBinding.tvTotalLearnedWords.text = progressText
+                }
             }
         }
 
@@ -96,57 +98,99 @@ class ProgressFragment : Fragment() {
 
     private fun setupBarChart(dailyData: List<DailyAverage>) {
         val correctEntries = ArrayList<BarEntry>()
-        val labels = arrayOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
-        val dayIndexMap = mutableMapOf<String, Int>()
+        val wrongEntries = ArrayList<BarEntry>()
+        val labels = arrayOf(
+            getString(R.string.Mo),
+            getString(R.string.Tu), getString(R.string.We), getString(R.string.Th),
+            getString(R.string.Fr), getString(R.string.Sa), getString(R.string.Su)
+        )
 
-        // Инициализация массива для всех дней недели нулями
-        val defaultData = Array(labels.size) { 0f }
+        val correctAnswersPerDay = mutableMapOf<String, Float>()
+        val wrongAnswersPerDay = mutableMapOf<String, Float>()
+        Log.d("ProgressData", "Daily Data: $dailyData")
 
-        labels.forEachIndexed { index, label ->
-            dayIndexMap[label] = index
+        labels.forEach {
+            correctAnswersPerDay[it] = 0f
+            wrongAnswersPerDay[it] = 0f
         }
-
         dailyData.forEach { data ->
-            val dayOfWeek = getDayOfWeek(data.day.toLong())
-            Log.d("BarChartData", "Day: $dayOfWeek, AvgCorrect: ${data.avgCorrect}")
-            val index = dayIndexMap[dayOfWeek] ?: 0
-            defaultData[index] = data.avgCorrect
+            val dayOfWeek = when (data.day.toInt()) {
+                0 -> getString(R.string.Su)
+                1 -> getString(R.string.Mo)
+                2 -> getString(R.string.Tu)
+                3 -> getString(R.string.We)
+                4 -> getString(R.string.Th)
+                5 -> getString(R.string.Fr)
+                6 -> getString(R.string.Sa)
+                else -> ""
+            }
+            correctAnswersPerDay[dayOfWeek]?.let {
+                correctAnswersPerDay[dayOfWeek] = it + data.avgCorrect
+            }
+            wrongAnswersPerDay[dayOfWeek]?.let {
+                wrongAnswersPerDay[dayOfWeek] = it + data.avgWrong
+            }
         }
 
-        // Заполнение столбцов для каждого дня недели от библиотеки
-        defaultData.forEachIndexed { index, value ->
-            correctEntries.add(BarEntry(index.toFloat(), value))
+        labels.forEachIndexed { index, day ->
+            correctEntries.add(BarEntry(index.toFloat(), correctAnswersPerDay[day] ?: 0f))
+            wrongEntries.add(BarEntry(index.toFloat(), wrongAnswersPerDay[day] ?: 0f))
         }
 
-        //Просто настройка Графика
         val correctDataSet = BarDataSet(correctEntries, "Правильные ответы")
         correctDataSet.color = ColorTemplate.COLORFUL_COLORS[1]
+        correctDataSet.valueTextSize = 12f
 
-        val barData = BarData(correctDataSet)
+        val wrongDataSet = BarDataSet(wrongEntries, "Неправильные ответы")
+        wrongDataSet.color = ColorTemplate.COLORFUL_COLORS[0]
+        wrongDataSet.valueTextSize = 14f
+
+        val barData = BarData(correctDataSet, wrongDataSet)
+        val groupSpace = 0.4f
+        val barSpace = 0.05f
+        val barWidth = 0.2f
+
+        barData.barWidth = barWidth
+
+
         binding.weeklyProgressChart.description.isEnabled = false
-        binding.weeklyProgressChart.data = barData
-        binding.weeklyProgressChart.setExtraOffsets(0f, 20f, 0f, 0f)
-        binding.weeklyProgressChart.legend.isEnabled = false
 
-        // Ось X
+        binding.weeklyProgressChart.data = barData
+        binding.weeklyProgressChart.groupBars(0f, groupSpace, barSpace)
+        binding.weeklyProgressChart.setExtraOffsets(0f, 20f, 0f, 0f)
+        binding.weeklyProgressChart.legend.isEnabled = true
+        binding.weeklyProgressChart.legend.textSize = 12f
+        binding.weeklyProgressChart.legend.formToTextSpace = 8f
+        binding.weeklyProgressChart.legend.isWordWrapEnabled = true
+        binding.weeklyProgressChart.legend.xEntrySpace = 64f
+        binding.weeklyProgressChart.legend.yEntrySpace = 10f
+        binding.weeklyProgressChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+        binding.weeklyProgressChart.invalidate()
+
         val xAxis = binding.weeklyProgressChart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
-        xAxis.granularity = 1f
+        xAxis.textSize = 14f  // Увеличиваем размер текста
+        xAxis.granularity = 1f  // Шаг для оси X
         xAxis.setLabelCount(labels.size, true)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.setDrawGridLines(false)
         xAxis.setDrawLabels(true)
-        xAxis.labelRotationAngle = 0f
+        xAxis.setCenterAxisLabels(true)
 
-        // Ось Y
+        Log.d("ProgressData", "Entries for chart: $correctEntries")
+
+        // Настройка оси Y
         val yAxisLeft = binding.weeklyProgressChart.axisLeft
         yAxisLeft.axisMinimum = 0f
+        yAxisLeft.textSize = 14f
+        yAxisLeft.axisMaximum = maxOf(
+            (correctAnswersPerDay.values.maxOrNull() ?: 0f),
+            (wrongAnswersPerDay.values.maxOrNull() ?: 0f)
+        ) + 5
+
         yAxisLeft.setDrawGridLines(false)
+        binding.weeklyProgressChart.axisRight.isEnabled = false
 
-        val yAxisRight = binding.weeklyProgressChart.axisRight
-        yAxisRight.isEnabled = false
-
-        binding.weeklyProgressChart.invalidate()
     }
 
 

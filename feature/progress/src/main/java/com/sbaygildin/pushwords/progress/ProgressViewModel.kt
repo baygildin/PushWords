@@ -10,7 +10,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProgressViewModel @Inject constructor(
     preferencesManager: AppPreferencesManager,
-    private val progressRepository: ProgressRepository,
+    private val progressRepository: ProgressRepository
 ) : ViewModel() {
 
     val userName: Flow<String> = preferencesManager.userNameFlow

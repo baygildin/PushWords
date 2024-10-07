@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,8 +16,6 @@ import com.sbaygildin.pushwords.settings.databinding.FragmentSettingsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.intellij.lang.annotations.Language
-import java.util.Locale
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment() {
@@ -75,6 +72,15 @@ class SettingsFragment : Fragment() {
                         binding.tvUserNameDisplay.text = "Ваше имя: $name"
                     }
                 }
+                launch {
+                    viewModel.languageForRiddles.collectLatest { languageForRiddles ->
+                        when (languageForRiddles) {
+                            "originalLanguage" -> binding.radioOptionOriginalLanguage.isChecked = true
+                            "translationLanguage" -> binding.radioOptionTranslationLanguage.isChecked = true
+                            else -> binding.radioOptionRandomLanguage.isChecked = true
+                        }
+                    }
+                }
 
             }
         }
@@ -111,6 +117,14 @@ class SettingsFragment : Fragment() {
                 viewModel.setUserName(currentName)
                 binding.edittextUserName.setText("")
             }
+        }
+        binding.radioGroupLanguageForRiddles.setOnCheckedChangeListener { _, checkId ->
+            val selectedLanguage = when (checkId) {
+                R.id.radio_option_original_language -> "originalLanguage"
+                R.id.radio_option_translation_language -> "translationLanguage"
+                else -> "random"
+            }
+            viewModel.setLanguageForRiddles(selectedLanguage)
         }
 
 

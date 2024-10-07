@@ -25,6 +25,7 @@ class AppPreferencesManager @Inject constructor(@ApplicationContext context: Con
     companion object {
         val DARK_MODE_KEY = booleanPreferencesKey("dark_mode")
         val LANGUAGE_KEY = stringPreferencesKey("language")
+        val LANGUAGE_FOR_RIDDLE_KEY = stringPreferencesKey("language_for_riddle")
         val NOTIFICATIONS_KEY = booleanPreferencesKey("notifications")
         val VOLUME_KEY = floatPreferencesKey("volume_level")
         val USERNAME_KEY = stringPreferencesKey("user_name")
@@ -49,6 +50,9 @@ class AppPreferencesManager @Inject constructor(@ApplicationContext context: Con
     val userNameFlow: Flow<String> = dataStore.data.map { preferences ->
         preferences[USERNAME_KEY] ?: ""
     }
+    val languageForRiddlesFlow: Flow<String> = dataStore.data.map { preferences ->
+        preferences[LANGUAGE_FOR_RIDDLE_KEY] ?: "random"
+    }
 
     suspend fun setDarkMode(enabled: Boolean) {
         dataStore.edit { preferences ->
@@ -59,6 +63,12 @@ class AppPreferencesManager @Inject constructor(@ApplicationContext context: Con
     suspend fun setLanguage(language: String) {
         dataStore.edit { preferences ->
             preferences[LANGUAGE_KEY] = language
+        }
+    }
+
+    suspend fun saveLanguageForRiddles(language: String) {
+        dataStore.edit { preferences ->
+            preferences[LANGUAGE_FOR_RIDDLE_KEY] = language
         }
     }
 

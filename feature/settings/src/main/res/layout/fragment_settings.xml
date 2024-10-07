@@ -130,17 +130,21 @@
             android:textStyle="bold"
             android:paddingBottom="8dp"/>
         <!--  RadioGroup with RadioButtons  -->
-        <RadioGroup android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+        <RadioGroup
+            android:id="@+id/radio_group_language_for_riddles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <RadioButton
-                android:id="@+id/radio_option1"
+                android:id="@+id/radio_option_original_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Английский язык"/>
-            <RadioButton android:id="@+id/radio_option2"
+            <RadioButton android:id="@+id/radio_option_translation_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Русский язык"/>
-            <RadioButton android:id="@+id/radio_option3"
+            <RadioButton android:id="@+id/radio_option_random_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="64dp"

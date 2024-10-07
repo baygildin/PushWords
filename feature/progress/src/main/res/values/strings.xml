@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PushWords</string>
+    <string name="Mo">Пн</string>
+    <string name="Tu">Вт</string>
+    <string name="We">Ср</string>
+    <string name="Th">Чт</string>
+    <string name="Fr">Пт</string>
+    <string name="Sa">Сб</string>
+    <string name="Su">Вс</string>
 </resources>

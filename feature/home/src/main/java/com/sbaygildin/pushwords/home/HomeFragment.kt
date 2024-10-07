@@ -40,150 +40,152 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding?.startButton?.visibility = View.VISIBLE
         binding?.wordButtonsContainer?.visibility = View.GONE
-
-
-
+        binding?.tvWordToGuess?.visibility = View.INVISIBLE
         binding?.startButton?.setOnClickListener {
             startQuiz()
         }
 
-
         viewModel.resetCounters()
-        Log.d("blinking", "onViewCreated")
-
-
 
         binding?.addWordButton?.setOnClickListener {
             (activity as Navigator).navigateHomeToAddword()
         }
     }
+
     private fun startQuiz() {
         roundCounter = 0
         binding?.startButton?.visibility = View.GONE
         binding?.wordButtonsContainer?.visibility = View.VISIBLE
+        binding?.tvWordToGuess?.visibility = View.VISIBLE
         setupQuiz()
     }
 
-
     private fun setupQuiz() {
-        Log.d("blinking", "private fun setupQuiz()")
-        val languageForRiddles = listOf("originalLanguage", "translationLanguage").random()
-
-        if (roundCounter == 20) {
-            binding?.startButton?.visibility = View.VISIBLE
-            binding?.startButton?.text = "Продолжить"
-            binding?.wordButtonsContainer?.visibility = View.GONE
-        } else {
-            roundCounter++
-            if (viewModel.getCachedWords().isEmpty()) {
-                binding?.tvLetsStartQuiz?.text = "Нет доступных слов для повторения"
-                return
-            }
-
-            if (viewModel.getCachedWords().size < 4) {
-                binding?.tvLetsStartQuiz?.text =
-                    "Добавьте еще слов или откройте файл со словами"
-                return
-            }
-
-            val correctWord = viewModel.getCachedWords().random()
-            val randomWords =
-                viewModel.getCachedWords().filter { it != correctWord }.shuffled().take(3).toMutableList()
-            randomWords.add(correctWord)
-            randomWords.shuffle()
-
-            val isOriginalToTranslate = languageForRiddles == "originalLanguage"
-            binding?.tvWordToGuess?.text =
-                if (isOriginalToTranslate) correctWord.originalWord else correctWord.translatedWord
-            val correctTranslation =
-                if (isOriginalToTranslate) correctWord.translatedWord else correctWord.originalWord
-
-            val options = listOf(
-                binding?.btnOption1,
-                binding?.btnOption2,
-                binding?.btnOption3,
-                binding?.btnOption4
-            )
-
-            options.forEach { button ->
-                button?.isEnabled = true
-                button?.alpha = 1f
-            }
-
-            var firstAttempt = true
-
-            options.forEachIndexed { index, button ->
-                val word = randomWords[index]
-                val displayText =
-                    if (isOriginalToTranslate) word.translatedWord else word.originalWord
-                button?.text = displayText
-                button?.setOnClickListener {
-
-                    lifecycleScope.launch {
-                        if (displayText == correctTranslation) {
-                            Log.d("blinking", "clicking right button")
-                            options.forEach { it?.isEnabled = false }
-                            viewModel.correctAnswer += 1
-                            playCorrectAnswerSound()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.languageForRiddles.collectLatest { userPreference ->
+                val languageForRiddles = if (userPreference == "random") {
+                    listOf("originalLanguage", "translationLanguage").random()
+                } else {
+                    userPreference
+                }
 
 
-                            if (firstAttempt) {
-                                viewModel.guessedRightAway += 1
 
-                                if (!correctWord.isLearned) {
-                                    viewModel.learnedWords += 1
-                                    //viewModel.updateWordAsLearned(correctWord.id)
-                                }
-                            }
+                if (roundCounter == 20) {
+                    binding?.startButton?.visibility = View.VISIBLE
+                    binding?.startButton?.text = "Продолжить"
+                    binding?.wordButtonsContainer?.visibility = View.GONE
 
-                            viewModel.recordProgressData(
-                                viewModel.correctAnswer,
-                                viewModel.wrongAnswer,
-                                viewModel.guessedRightAway,
-                                viewModel.learnedWords
-                            )
+                    binding?.tvWordToGuess?.text =
+                        "Количество правильных ответов: ${viewModel.correctAnswer}\nКоличество неправильных ответов: ${viewModel.wrongAnswer}\nКоличество угаданных ответов с первого раза: ${viewModel.guessedRightAway}\nКоличество новых изученных слов: ${viewModel.learnedWords}"
+                } else {
+                    roundCounter++
+                    if (viewModel.getCachedWords().isEmpty()) {
+                        binding?.tvLetsStartQuiz?.text = "Нет доступных слов для повторения"
+                        return@collectLatest
+                    }
 
-                            binding?.tvLetsStartQuiz?.text = "Правильно!\nВы молодец✨"
-                            button?.animate()
-                                ?.translationYBy(-600f)
-                                ?.alpha(0f)
-                                ?.setDuration(1000)
-                                ?.withLayer()
-                                ?.withEndAction {
-                                    button.translationY = 0f
-                                    button.alpha = 1f
-                                    viewModel.resetCounters()
-                                    Log.d("blinking", "before delay")
+                    if (viewModel.getCachedWords().size < 4) {
+                        binding?.tvLetsStartQuiz?.text =
+                            "Добавьте еще слов или откройте файл со словами"
+                        return@collectLatest
+                    }
 
-                                }
-                                ?.start()
-                            Log.d("blinking", "after animation")
+                    val correctWord = viewModel.getCachedWords().random()
+                    val randomWords =
+                        viewModel.getCachedWords().filter { it != correctWord }.shuffled().take(3)
+                            .toMutableList()
+                    randomWords.add(correctWord)
+                    randomWords.shuffle()
+
+                    val isOriginalToTranslate = languageForRiddles == "originalLanguage"
+                    binding?.tvWordToGuess?.text =
+                        if (isOriginalToTranslate) correctWord.originalWord else correctWord.translatedWord
+                    val correctTranslation =
+                        if (isOriginalToTranslate) correctWord.translatedWord else correctWord.originalWord
+
+                    val options = listOf(
+                        binding?.btnOption1,
+                        binding?.btnOption2,
+                        binding?.btnOption3,
+                        binding?.btnOption4
+                    )
+
+                    options.forEach { button ->
+                        button?.isEnabled = true
+                        button?.alpha = 1f
+                    }
+
+                    var firstAttempt = true
+
+                    options.forEachIndexed { index, button ->
+                        val word = randomWords[index]
+                        val displayText =
+                            if (isOriginalToTranslate) word.translatedWord else word.originalWord
+                        button?.text = displayText
+                        button?.setOnClickListener {
+
                             lifecycleScope.launch {
-                                delay(500)
-                                Log.d("blinking", "after delay")
-                                setupQuiz()
-                                Log.d("blinking", "after delay and setupQuiz")
-                            }
+                                if (displayText == correctTranslation) {
+                                    options.forEach { it?.isEnabled = false }
+                                    viewModel.correctAnswer += 1
+                                    playCorrectAnswerSound()
 
 
-                        } else {
-                            firstAttempt = false
-                            Log.d("blinking", "clicking wrong button")
-                            viewModel.wrongAnswer += 1
-                            binding?.tvLetsStartQuiz?.text =
-                                "Неправильный ответ⛔\nПопробуйте ещё раз"
-                            button?.isEnabled = false
-                            button?.animate()
-                                ?.translationYBy(+300f)
-                                ?.alpha(0f)
-                                ?.rotation(360f)
-                                ?.setDuration(1000)
-                                ?.withLayer()
-                                ?.withEndAction {
-                                    button.translationY = 0f
-                                    button.rotation = 0f
+                                    if (firstAttempt) {
+                                        viewModel.guessedRightAway += 1
+
+                                        if (!correctWord.isLearned) {
+                                            viewModel.learnedWords += 1
+                                            viewModel.updateWordAsLearned(correctWord.id)
+                                        }
+                                    }
+
+                                    viewModel.recordProgressData(
+                                        viewModel.correctAnswer,
+                                        viewModel.wrongAnswer,
+                                        viewModel.guessedRightAway,
+                                        viewModel.learnedWords
+                                    )
+
+                                    binding?.tvLetsStartQuiz?.text = "Правильно!\nВы молодец✨"
+                                    button?.animate()
+                                        ?.translationYBy(-600f)
+                                        ?.alpha(0f)
+                                        ?.setDuration(1000)
+                                        ?.withLayer()
+                                        ?.withEndAction {
+                                            button.translationY = 0f
+                                            button.alpha = 1f
+                                            viewModel.resetCounters()
+
+                                        }
+                                        ?.start()
+                                    lifecycleScope.launch {
+                                        delay(500)
+                                        setupQuiz()
+                                    }
+
+
+                                } else {
+                                    firstAttempt = false
+                                    viewModel.wrongAnswer += 1
+                                    binding?.tvLetsStartQuiz?.text =
+                                        "Неправильный ответ⛔\nПопробуйте ещё раз"
+                                    button?.isEnabled = false
+                                    button?.animate()
+                                        ?.translationYBy(+300f)
+                                        ?.alpha(0f)
+                                        ?.rotation(360f)
+                                        ?.setDuration(1000)
+                                        ?.withLayer()
+                                        ?.withEndAction {
+                                            button.translationY = 0f
+                                            button.rotation = 0f
+                                        }
+                                        ?.start()
                                 }
-                                ?.start()
+                            }
                         }
                     }
                 }

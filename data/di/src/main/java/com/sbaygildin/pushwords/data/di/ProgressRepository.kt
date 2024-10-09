@@ -15,5 +15,11 @@ class ProgressRepository @Inject constructor(private val progressDataDao: Progre
     suspend fun getDailyAverages(startTimestamp: Long, endTimestamp: Long): List<DailyAverage> = withContext(Dispatchers.IO) {
         progressDataDao.getDailyAverages(startTimestamp, endTimestamp)
     }
+    suspend fun getProgressData(startTimestamp: Long, endTimestamp: Long): List<ProgressData> = withContext(Dispatchers.IO) {
+        progressDataDao.getProgressData(startTimestamp, endTimestamp)
+    }
+
+
+
 }
 

@@ -66,6 +66,7 @@ dependencies {
     implementation(project(":data:di"))
     implementation(project(":data:model"))
     implementation(project(":common"))
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 
 

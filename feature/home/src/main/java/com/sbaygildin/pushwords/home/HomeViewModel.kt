@@ -8,6 +8,7 @@ import com.sbaygildin.pushwords.data.di.WordTranslationDao
 import com.sbaygildin.pushwords.data.model.ProgressData
 import com.sbaygildin.pushwords.data.model.WordTranslation
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,28 +26,30 @@ class HomeViewModel @Inject constructor(
     var wrongAnswer = 0 //Количество неправильных ответов
     var guessedRightAway = 0 //Количество угаданных ответов с первого раза
     var learnedWords = 0 //Количество новых изученных слов. isLearned должен быть false  у них
-    var  wordCache: List<WordTranslation> = emptyList()
-    //Сделай Массив, чтоб быстрее работало. Все равно знаешь размер
+    lateinit var  wordCache: Array<WordTranslation>
     val languageForRiddles: Flow<String> = preferencesManager.languageForRiddlesFlow
 
 
 
     init {
-        viewModelScope.launch {
+        updateCache()
+    }
+    fun getCachedWords(): Array<WordTranslation> {
+        return wordCache
+    }
+    fun updateCache() {
+        viewModelScope.launch(Dispatchers.IO) {
             wordTranslationDao.getAllWordTranslations().collect{ wordList ->
                 wordCache = if (wordList.size > 1000) {
-                    wordList.shuffled().take(1000)
+                    wordList.shuffled().take(1000).toTypedArray()
                 } else {
-                    wordList
+                    wordList.toTypedArray()
                 }
             }
         }
     }
-    fun getCachedWords(): List<WordTranslation> {
-        return wordCache
-    }
     fun recordProgressData(correct: Int, wrong: Int, guessedRightAway: Int, learnedWords: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val progressData = ProgressData(
                 timestamp = System.currentTimeMillis(),
                 correctAnswers = correct,
@@ -66,7 +69,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun updateWordAsLearned(wordId: Long) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             wordTranslationDao.updateWordAsLearned(wordId)
         }
     }

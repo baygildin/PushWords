@@ -14,6 +14,7 @@ import com.sbaygildin.pushwords.data.model.WordTranslation
 import com.sbaygildin.pushwords.home.databinding.FragmentHomeBinding
 import com.sbaygildin.pushwords.navigation.Navigator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -61,7 +62,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupQuiz() {
-        viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             viewModel.languageForRiddles.collectLatest { userPreference ->
                 val languageForRiddles = if (userPreference == "random") {
                     listOf("originalLanguage", "translationLanguage").random()
@@ -75,6 +76,7 @@ class HomeFragment : Fragment() {
                     binding?.startButton?.visibility = View.VISIBLE
                     binding?.startButton?.text = "Продолжить"
                     binding?.wordButtonsContainer?.visibility = View.GONE
+                    viewModel.updateCache()
 
                     binding?.tvWordToGuess?.text =
                         "Количество правильных ответов: ${viewModel.correctAnswer}\nКоличество неправильных ответов: ${viewModel.wrongAnswer}\nКоличество угаданных ответов с первого раза: ${viewModel.guessedRightAway}\nКоличество новых изученных слов: ${viewModel.learnedWords}"
@@ -125,7 +127,7 @@ class HomeFragment : Fragment() {
                         button?.text = displayText
                         button?.setOnClickListener {
 
-                            lifecycleScope.launch {
+                            lifecycleScope.launch(Dispatchers.Main) {
                                 if (displayText == correctTranslation) {
                                     options.forEach { it?.isEnabled = false }
                                     viewModel.correctAnswer += 1
@@ -149,20 +151,20 @@ class HomeFragment : Fragment() {
                                     )
 
                                     binding?.tvLetsStartQuiz?.text = "Правильно!\nВы молодец✨"
-                                    button?.animate()
-                                        ?.translationYBy(-600f)
-                                        ?.alpha(0f)
-                                        ?.setDuration(1000)
-                                        ?.withLayer()
-                                        ?.withEndAction {
-                                            button.translationY = 0f
-                                            button.alpha = 1f
-                                            viewModel.resetCounters()
-
-                                        }
-                                        ?.start()
+//                                    button?.animate()
+//                                        ?.translationYBy(-600f)
+//                                        ?.alpha(0f)
+//                                        ?.setDuration(1000)
+//                                        ?.withLayer()
+//                                        ?.withEndAction {
+//                                            button.translationY = 0f
+//                                            button.alpha = 1f
+//                                            viewModel.resetCounters()
+//
+//                                        }
+//                                        ?.start()
                                     lifecycleScope.launch {
-                                        delay(500)
+                                        delay(700)
                                         setupQuiz()
                                     }
 

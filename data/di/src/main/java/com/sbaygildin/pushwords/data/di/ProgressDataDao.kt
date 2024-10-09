@@ -12,16 +12,7 @@ interface ProgressDataDao {
 
 
 
-    // Агрегация по дням для правильных и неправильных ответов за последние 7 дней
-//    @Query("""
-//        SELECT strftime('%d', datetime(timestamp / 1000, 'unixepoch')) AS day,
-//               SUM(correctAnswers) AS avgCorrect,
-//               SUM(wrongAnswers) AS avgWrong
-//        FROM progress_data
-//        WHERE timestamp BETWEEN :startTimestamp AND :endTimestamp
-//        GROUP BY day
-//        ORDER BY day
-//    """)
+
     @Query("""
     SELECT strftime('%w', datetime(timestamp / 1000, 'unixepoch')) AS day,
            SUM(correctAnswers) AS avgCorrect,
@@ -31,18 +22,18 @@ interface ProgressDataDao {
     GROUP BY day
     ORDER BY day
 """)
-//    @Query("""
-//    SELECT strftime('%Y-%m-%d', datetime(timestamp / 1000, 'unixepoch')) AS day,
-//       SUM(correctAnswers) AS avgCorrect,
-//       SUM(wrongAnswers) AS avgWrong
-//FROM progress_data
-//WHERE timestamp BETWEEN :startTimestamp AND :endTimestamp
-//GROUP BY day
-//ORDER BY day
-//
-//""")
     suspend fun getDailyAverages(startTimestamp: Long, endTimestamp: Long): List<DailyAverage>
 
     @Insert
     suspend fun insertProgressData(progressData: ProgressData)
+
+
+    @Query("""
+        SELECT * FROM progress_data
+        WHERE timestamp BETWEEN :startTimestamp AND :endTimestamp
+        ORDER BY timestamp
+    """)
+    suspend fun getProgressData(startTimestamp: Long, endTimestamp: Long): List<ProgressData>
+
+
 }

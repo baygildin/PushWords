@@ -1,5 +1,6 @@
 package com.sbaygildin.pushwords.progress
 
+import android.graphics.Color
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
@@ -14,10 +15,15 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.sbaygildin.pushwords.data.model.DailyAverage
 import com.sbaygildin.pushwords.data.di.ProgressRepository
+import com.sbaygildin.pushwords.data.model.ProgressData
 import com.sbaygildin.pushwords.progress.databinding.FragmentProgressBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -34,9 +40,7 @@ class ProgressFragment : Fragment() {
     @Inject
     lateinit var progressRepository: ProgressRepository
 
-    private var totalLearnedWords: Int = 0
-    private var guessedRightAway: Int = 0
-    private var correctAnswer: Int = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,61 +57,77 @@ class ProgressFragment : Fragment() {
             val currentTime = System.currentTimeMillis()
             val startTime = currentTime - 7 * 24 * 60 * 60 * 1000L // 7 дней назад
             val dailyData = progressRepository.getDailyAverages(startTime, currentTime)
-
-            totalLearnedWords = calculateTotalLearnedWords(dailyData)
-            guessedRightAway = calculateGuessedRightAway(dailyData)
-            correctAnswer = calculateCorrectAnswers(dailyData)
-
-            updateProgressText()
             setupBarChart(dailyData)
-        }
-    }
+            viewModel.fetchProgressData(currentTime)
+            updateProgressPieChart()
 
-    private fun updateProgressText() {
-        var userName = ""
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.userName.collectLatest { name ->
-                userName = if (name == "") "" else name + "!\n"
-                val progressText = userName + """
-            Ваш прогресс:
-            Вы выучили $totalLearnedWords новых слов(а)!
-            Угадали с первого раза $guessedRightAway слов(а)!
-            И повторили $correctAnswer слов(а)!
-        """.trimIndent()
 
-                binding?.let { safeBinding ->
-                    safeBinding.tvTotalLearnedWords.text = progressText
+            val progressDataList = progressRepository.getProgressData(startTime, currentTime)
+            viewModel.calculateProgressData(progressDataList)
+            val switchProgressType = binding.switchProgressType
+            switchProgressType.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    viewModel.dailyToAllTimeSwitcher = false
+                    switchProgressType.text = "Прогресс за день"
+                } else {
+                    viewModel.dailyToAllTimeSwitcher = true
+                    switchProgressType.text = "Прогресс за все время"
+                }
+                lifecycleScope.launch {
+                    viewModel.fetchProgressData(currentTime)
+                    updateProgressPieChart()
                 }
             }
+
         }
-
-    }
-
-    private fun calculateTotalLearnedWords(dailyData: List<DailyAverage>): Int {
-        return dailyData.sumOf { it.avgCorrect.toInt() }
-    }
-
-    private fun calculateGuessedRightAway(dailyData: List<DailyAverage>): Int {
-        return (dailyData.sumOf { it.avgCorrect.toInt() * 0.7 }).toInt()
     }
 
 
-    private fun calculateCorrectAnswers(dailyData: List<DailyAverage>): Int {
-        return dailyData.sumOf { it.avgCorrect.toInt() + it.avgWrong.toInt() }
+    private fun updateProgressPieChart() {
+        val pieEntries = ArrayList<PieEntry>()
+
+        pieEntries.add(PieEntry(viewModel.totalLearnedWords.toFloat(), "Выученные слова"))
+        pieEntries.add(PieEntry(viewModel.guessedRightAway.toFloat(), "Угаданные с первого раза"))
+        pieEntries.add(PieEntry(viewModel.correctAnswer.toFloat(), "Повторённые слова"))
+        pieEntries.add(PieEntry(viewModel.wrongAnswer.toFloat(), "Неправильные ответы"))
+
+        val pieDataSet = PieDataSet(pieEntries, "Ваш прогресс")
+        pieDataSet.colors = ColorTemplate.COLORFUL_COLORS.toList() // Задаём цвета для секторов
+        pieDataSet.valueTextSize = 14f  // Размер текста для значений
+
+        val pieData = PieData(pieDataSet)
+
+        binding.pieChartProgress.run {
+            data = pieData
+            description.isEnabled = false
+            isRotationEnabled = true
+            setEntryLabelTextSize(12f)
+            setUsePercentValues(false)
+            legend.isEnabled = false
+            invalidate()  // Перерисовка
+        }
+        binding.pieChartProgress.animateY(1000)
     }
 
     private fun setupBarChart(dailyData: List<DailyAverage>) {
         val correctEntries = ArrayList<BarEntry>()
         val wrongEntries = ArrayList<BarEntry>()
-        val labels = arrayOf(
-            getString(R.string.Mo),
-            getString(R.string.Tu), getString(R.string.We), getString(R.string.Th),
-            getString(R.string.Fr), getString(R.string.Sa), getString(R.string.Su)
-        )
 
         val correctAnswersPerDay = mutableMapOf<String, Float>()
         val wrongAnswersPerDay = mutableMapOf<String, Float>()
         Log.d("ProgressData", "Daily Data: $dailyData")
+        val calendar = Calendar.getInstance()
+        val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        val labels = arrayOf(
+            getString(R.string.Su),
+            getString(R.string.Mo),
+            getString(R.string.Tu),
+            getString(R.string.We),
+            getString(R.string.Th),
+            getString(R.string.Fr),
+            getString(R.string.Sa)
+        )
+        Collections.rotate(labels.asList(), -currentDayOfWeek)
 
         labels.forEach {
             correctAnswersPerDay[it] = 0f
@@ -133,6 +153,7 @@ class ProgressFragment : Fragment() {
         }
 
         labels.forEachIndexed { index, day ->
+
             correctEntries.add(BarEntry(index.toFloat(), correctAnswersPerDay[day] ?: 0f))
             wrongEntries.add(BarEntry(index.toFloat(), wrongAnswersPerDay[day] ?: 0f))
         }
@@ -146,67 +167,73 @@ class ProgressFragment : Fragment() {
         wrongDataSet.valueTextSize = 14f
 
         val barData = BarData(correctDataSet, wrongDataSet)
-        val groupSpace = 0.4f
-        val barSpace = 0.05f
-        val barWidth = 0.2f
+        val groupSpace = 0.18f
+        val barSpace = 0.03f
+        val barWidth = 0.35f
+
+
+        //delete 0.0 value
+        correctDataSet.setDrawValues(true)
+        correctDataSet.valueFormatter = object : ValueFormatter() {
+            override fun getBarLabel(barEntry: BarEntry): String {
+                return if (barEntry.y == 0f) "" else barEntry.y.toString()
+            }
+        }
+        wrongDataSet.setDrawValues(true)
+        wrongDataSet.valueFormatter = object : ValueFormatter() {
+            override fun getBarLabel(barEntry: BarEntry): String {
+                return if (barEntry.y == 0f) "" else barEntry.y.toString()
+            }
+        }
+
 
         barData.barWidth = barWidth
 
+        binding.weeklyProgressChart.run {
+            description.isEnabled = false
+            data = barData
+            groupBars(0f, groupSpace, barSpace)
+            setExtraOffsets(0f, 20f, 0f, 0f)
+            legend.isEnabled = true
+            legend.textSize = 12f
+            legend.formToTextSpace = 8f
+            legend.isWordWrapEnabled = true
+            legend.xEntrySpace = 24f
+            legend.yEntrySpace = -24f
+            setVisibleXRangeMaximum(7f)
+            moveViewToX(0f)
+            legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            setFitBars(true)
+            invalidate()
+        }
 
-        binding.weeklyProgressChart.description.isEnabled = false
-
-        binding.weeklyProgressChart.data = barData
-        binding.weeklyProgressChart.groupBars(0f, groupSpace, barSpace)
-        binding.weeklyProgressChart.setExtraOffsets(0f, 20f, 0f, 0f)
-        binding.weeklyProgressChart.legend.isEnabled = true
-        binding.weeklyProgressChart.legend.textSize = 12f
-        binding.weeklyProgressChart.legend.formToTextSpace = 8f
-        binding.weeklyProgressChart.legend.isWordWrapEnabled = true
-        binding.weeklyProgressChart.legend.xEntrySpace = 64f
-        binding.weeklyProgressChart.legend.yEntrySpace = 10f
-        binding.weeklyProgressChart.legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        binding.weeklyProgressChart.invalidate()
 
         val xAxis = binding.weeklyProgressChart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
-        xAxis.textSize = 14f  // Увеличиваем размер текста
-        xAxis.granularity = 1f  // Шаг для оси X
-        xAxis.setLabelCount(labels.size, true)
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.setDrawGridLines(false)
-        xAxis.setDrawLabels(true)
-        xAxis.setCenterAxisLabels(true)
+        xAxis.run {
+            textSize = 12f  // Увеличиваем размер текста
+            granularity = 1f  // Шаг для оси X
+            setLabelCount(labels.size, false)
+            setDrawGridLines(false)
+            position = XAxis.XAxisPosition.BOTTOM
+            setDrawLabels(true)
+            setCenterAxisLabels(true)
+            setAvoidFirstLastClipping(true)
+        }
 
-        Log.d("ProgressData", "Entries for chart: $correctEntries")
-
-        // Настройка оси Y
         val yAxisLeft = binding.weeklyProgressChart.axisLeft
-        yAxisLeft.axisMinimum = 0f
-        yAxisLeft.textSize = 14f
-        yAxisLeft.axisMaximum = maxOf(
-            (correctAnswersPerDay.values.maxOrNull() ?: 0f),
-            (wrongAnswersPerDay.values.maxOrNull() ?: 0f)
-        ) + 5
+        yAxisLeft.run {
+            axisMinimum = 0f
 
-        yAxisLeft.setDrawGridLines(false)
+            textSize = 14f
+            axisMaximum = maxOf(
+                (correctAnswersPerDay.values.maxOrNull() ?: 0f),
+                (wrongAnswersPerDay.values.maxOrNull() ?: 0f)
+            ) + 5
+            setDrawGridLines(false)
+        }
         binding.weeklyProgressChart.axisRight.isEnabled = false
 
-    }
-
-
-    private fun getDayOfWeek(timestamp: Long): String {
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = timestamp * 1000
-        return when (calendar.get(Calendar.DAY_OF_WEEK)) {
-            Calendar.MONDAY -> "Пн"
-            Calendar.TUESDAY -> "Вт"
-            Calendar.WEDNESDAY -> "Ср"
-            Calendar.THURSDAY -> "Чт"
-            Calendar.FRIDAY -> "Пт"
-            Calendar.SATURDAY -> "Сб"
-            Calendar.SUNDAY -> "Вс"
-            else -> ""
-        }
     }
 
     override fun onDestroyView() {

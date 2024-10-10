@@ -66,6 +66,10 @@ class AddwordFragment : Fragment() {
         binding.wordsLevelC2Button.setOnClickListener {
             viewModel.importWordsFromRaw(requireContext(), R.raw.c2level, DifficultyLevel.HARD)
         }
+        binding.helpIcon.setOnClickListener{
+            val helpDialog = HelpDialogFragment()
+            helpDialog.show(parentFragmentManager, "HelpDialog")
+        }
 
         binding.saveButton.setOnClickListener {
             val originalWord = binding.originalWordEditText.text.toString().trim()

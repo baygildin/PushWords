@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PushWords</string>
+    <string name="txt_help_makefile_txt">If you want to add words using a text file, ensure that the .txt file contains words in the following format:</string>
+    <string name="txt_help_makefile_txt_example">word = слово\nbetter = лучше\nno-smoking = курение запрещено</string>
+    <string name="txt_help_makefile_txt_explanation">Each line should have an English word, an equal sign =, and its translation in Russian.</string>
+    <string name="txt_help_makefile_txt_important">Important: Make sure to choose the correct encoding for your text file. We recommend using UTF-8 or Unicode to avoid issues with character display.</string>
 </resources>
+

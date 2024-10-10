@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PushWords</string>
+    <string name="txt_help_makefile_txt">Если вы хотите добавить слова через текстовый файл, убедитесь, что файл формата .txt содержит слова в следующем виде:</string>
+    <string name="txt_help_makefile_txt_example">word = слово\nbetter = лучше\nno-smoking = курение запрещено</string>
+    <string name="txt_help_makefile_txt_explanation">Каждая строка должна содержать английское слово, знак = и его перевод на русский язык.</string>
+    <string name="txt_help_makefile_txt_important"><strong>Важно</strong>: выберите правильную кодировку для текстового файла. Мы рекомендуем использовать UTF-8 или Юникод, чтобы избежать проблем с отображением символов.</string>
 </resources>

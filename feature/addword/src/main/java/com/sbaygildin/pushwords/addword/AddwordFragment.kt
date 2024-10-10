@@ -48,6 +48,24 @@ class AddwordFragment : Fragment() {
         binding.loadFromFileButton.setOnClickListener {
             openFilePicker()
         }
+        binding.wordsLevelA1Button.setOnClickListener {
+            viewModel.importWordsFromRaw(requireContext(), R.raw.a1level, DifficultyLevel.EASY)
+        }
+        binding.wordsLevelB1Button.setOnClickListener {
+            viewModel.importWordsFromRaw(requireContext(), R.raw.b1level, DifficultyLevel.EASY)
+        }
+        binding.wordsLevelA2Button.setOnClickListener {
+            viewModel.importWordsFromRaw(requireContext(), R.raw.a2level, DifficultyLevel.EASY)
+        }
+        binding.wordsLevelB2Button.setOnClickListener {
+            viewModel.importWordsFromRaw(requireContext(), R.raw.b2level, DifficultyLevel.EASY)
+        }
+        binding.wordsLevelC1Button.setOnClickListener {
+            viewModel.importWordsFromRaw(requireContext(), R.raw.c1level, DifficultyLevel.EASY)
+        }
+        binding.wordsLevelC2Button.setOnClickListener {
+            viewModel.importWordsFromRaw(requireContext(), R.raw.c2level, DifficultyLevel.EASY)
+        }
 
         binding.saveButton.setOnClickListener {
             val originalWord = binding.originalWordEditText.text.toString().trim()

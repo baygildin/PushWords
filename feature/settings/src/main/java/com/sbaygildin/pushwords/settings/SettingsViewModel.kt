@@ -21,8 +21,6 @@ class SettingsViewModel @Inject constructor(
     val notifications: Flow<Boolean> = preferencesManager.notificationsFlow
     val volume: Flow<Float> = preferencesManager.volumeFlow
     val languageForRiddles: Flow<String> = preferencesManager.languageForRiddlesFlow
-
-    //    val userName: Flow<String> = preferencesManager.userNameFlow
     val userName: StateFlow<String?> = preferencesManager.userNameFlow.stateIn(
         viewModelScope, SharingStarted.Lazily, null
     )

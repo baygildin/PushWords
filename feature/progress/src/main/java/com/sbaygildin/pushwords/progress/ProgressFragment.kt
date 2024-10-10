@@ -92,8 +92,8 @@ class ProgressFragment : Fragment() {
         pieEntries.add(PieEntry(viewModel.wrongAnswer.toFloat(), "Неправильные ответы"))
 
         val pieDataSet = PieDataSet(pieEntries, "Ваш прогресс")
-        pieDataSet.colors = ColorTemplate.COLORFUL_COLORS.toList() // Задаём цвета для секторов
-        pieDataSet.valueTextSize = 14f  // Размер текста для значений
+        pieDataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
+        pieDataSet.valueTextSize = 14f
 
         val pieData = PieData(pieDataSet)
 
@@ -104,7 +104,7 @@ class ProgressFragment : Fragment() {
             setEntryLabelTextSize(12f)
             setUsePercentValues(false)
             legend.isEnabled = false
-            invalidate()  // Перерисовка
+            invalidate()
         }
         binding.pieChartProgress.animateY(1000)
     }
@@ -211,8 +211,8 @@ class ProgressFragment : Fragment() {
         val xAxis = binding.weeklyProgressChart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
         xAxis.run {
-            textSize = 12f  // Увеличиваем размер текста
-            granularity = 1f  // Шаг для оси X
+            textSize = 12f
+            granularity = 1f
             setLabelCount(labels.size, false)
             setDrawGridLines(false)
             position = XAxis.XAxisPosition.BOTTOM

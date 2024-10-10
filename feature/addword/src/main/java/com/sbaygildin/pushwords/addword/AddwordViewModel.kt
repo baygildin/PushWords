@@ -51,6 +51,40 @@ class AddwordViewModel @Inject constructor(
             content?.let { parseAndSaveWords(it) }
         }
     }
+    fun importWordsFromRaw(context: Context, resourceId: Int, difficultyLevel: DifficultyLevel) {
+        viewModelScope.launch {
+            val inputStream = context.resources.openRawResource(resourceId)
+            val content = inputStream.bufferedReader().use { it.readText() }
+            parseAndSaveLevelWords(content, difficultyLevel)
+        }
+    }
+    private fun parseAndSaveLevelWords(content: String, difficultyLevel: DifficultyLevel) {
+        val lines = content.split("\n")
+        lines.forEach { line ->
+            val parts = line.split("=")
+            if (parts.size == 2) {
+                val originalWord = parts[0].trim()
+                val translatedWord = parts[1].trim()
+
+                val newWord = WordTranslation(
+                    originalWord = originalWord,
+                    translatedWord = translatedWord,
+                    isLearned = false,
+                    originalLanguage = "English",
+                    translationLanguage = "Russian",
+                    dateAdded = Date(System.currentTimeMillis()),
+                    difficultyLevel = difficultyLevel
+                )
+
+                viewModelScope.launch {
+                    wordTranslationDao.insertWordTranslation(newWord)
+                }
+            }
+        }
+        _importSuccess.postValue(true)
+    }
+
+
 
 
     private fun parseAndSaveWords(content: String) {

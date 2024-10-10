@@ -13,7 +13,10 @@
     <color name="background_light">#F5F5F5</color>
     <color name="primary_dark">#BB86FC</color>
     <color name="secondary_dark">#03DAC6</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorAccent">#03DAC5</color>
     <color name="background_dark">#121212</color>
+
 
     <!-- Другие цвета для темного режима -->
     <color name="primaryColorDark">#121212</color>

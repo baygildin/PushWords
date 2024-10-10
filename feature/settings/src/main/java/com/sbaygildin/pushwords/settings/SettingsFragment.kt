@@ -2,6 +2,7 @@ package com.sbaygildin.pushwords.settings
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -153,6 +154,7 @@ class SettingsFragment : Fragment() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
                 val finalVolume = seekBar?.progress?.div(100f) ?: 0.5f
                 viewModel.setVolume(finalVolume)
+
             }
         })
     }

@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
         lifecycleScope.launch {
             preferencesManager.darkModeFlow.collect {isDarkMode ->
                 updateTheme(isDarkMode)
+                Log.d("DarkThemeproblem", "preferencesManager.darkModeFlow.collect {isDarkMode ->")
             }
         }
 
@@ -147,11 +148,20 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
         Log.d("QuizWorkManager", "WorkManager cancelled")
     }
     override fun updateTheme(isDarkMode: Boolean) {
-        if (isDarkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        val currentMode = AppCompatDelegate.getDefaultNightMode()
+        if (currentMode != (if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)) {
+            AppCompatDelegate.setDefaultNightMode(if (isDarkMode) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
         }
+
+//        if (isDarkMode) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+//            Log.d("ThemeMode", "Current mode after setting: ${AppCompatDelegate.getDefaultNightMode()}")
+//        } else {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+//            Log.d("ThemeMode", "Current mode after setting: ${AppCompatDelegate.getDefaultNightMode()}")
+//        }
+//        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_UNSPECIFIED)
+        Log.d("ThemeMode", "Current mode after setting: ${AppCompatDelegate.getDefaultNightMode()}")
     }
 
     private fun setupBottomNavMenu(navController: NavController) {

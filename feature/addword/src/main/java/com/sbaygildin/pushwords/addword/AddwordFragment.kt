@@ -52,19 +52,19 @@ class AddwordFragment : Fragment() {
             viewModel.importWordsFromRaw(requireContext(), R.raw.a1level, DifficultyLevel.EASY)
         }
         binding.wordsLevelB1Button.setOnClickListener {
-            viewModel.importWordsFromRaw(requireContext(), R.raw.b1level, DifficultyLevel.EASY)
+            viewModel.importWordsFromRaw(requireContext(), R.raw.b1level, DifficultyLevel.MEDIUM)
         }
         binding.wordsLevelA2Button.setOnClickListener {
             viewModel.importWordsFromRaw(requireContext(), R.raw.a2level, DifficultyLevel.EASY)
         }
         binding.wordsLevelB2Button.setOnClickListener {
-            viewModel.importWordsFromRaw(requireContext(), R.raw.b2level, DifficultyLevel.EASY)
+            viewModel.importWordsFromRaw(requireContext(), R.raw.b2level, DifficultyLevel.MEDIUM)
         }
         binding.wordsLevelC1Button.setOnClickListener {
-            viewModel.importWordsFromRaw(requireContext(), R.raw.c1level, DifficultyLevel.EASY)
+            viewModel.importWordsFromRaw(requireContext(), R.raw.c1level, DifficultyLevel.HARD)
         }
         binding.wordsLevelC2Button.setOnClickListener {
-            viewModel.importWordsFromRaw(requireContext(), R.raw.c2level, DifficultyLevel.EASY)
+            viewModel.importWordsFromRaw(requireContext(), R.raw.c2level, DifficultyLevel.HARD)
         }
 
         binding.saveButton.setOnClickListener {

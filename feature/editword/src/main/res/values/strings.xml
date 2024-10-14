@@ -3,4 +3,9 @@
     <string name="app_name">PushWords</string>
     <string name="toast_word_not_found">Word not found</string>
     <string name="tv_this_field_is_required">This field is required</string>
+    <string name="txt_original_word">Original Word</string>
+    <string name="txt_translated_word">Translated Word</string>
+    <string name="txt_is_learned">Is Learned</string>
+    <string name="txt_save">Save</string>
+    <string name="txt_back">Back</string>
 </resources>

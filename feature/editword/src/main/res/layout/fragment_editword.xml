@@ -26,7 +26,7 @@
                 android:id="@+id/originalWordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Original Word" />
+                android:hint="@string/txt_original_word" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -42,14 +42,14 @@
                 android:id="@+id/translatedWordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Translated Word" />
+                android:hint="@string/txt_translated_word" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/isLearnedCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Is Learned"
+            android:text="@string/txt_is_learned"
             app:layout_constraintTop_toBottomOf="@id/translatedWordInputLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +68,7 @@
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="@string/txt_save"
             app:layout_constraintTop_toBottomOf="@id/difficultyLevelSpinner"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/cancelButton"
@@ -78,7 +78,7 @@
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back"
+            android:text="@string/txt_back"
             app:layout_constraintTop_toBottomOf="@id/difficultyLevelSpinner"
             app:layout_constraintStart_toEndOf="@id/saveButton"
             app:layout_constraintEnd_toEndOf="parent"

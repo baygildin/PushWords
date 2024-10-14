@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PushWords</string>
+    <string name="txt_your_name_display">Your name: %1$s</string>
+    <string name="txt_enter_your_name">Enter your name</string>
+    <string name="txt_your_name">Ваше имя:</string>
+    <string name="txt_save">Save</string>
+    <string name="txt_choose_an_option">Choose an option</string>
+    <string name="txt_enable_notifications">Enable notifications</string>
+    <string name="txt_show_words_and_translations_in_push_notifications">Show words and translations in push notifications</string>
+    <string name="txt_select_the_frequency_of_notifications">Select the frequency of notifications</string>
+    <string name="txt_select_preferences">Select preferences</string>
+    <string name="txt_enable_dark_mode">Enable dark mode</string>
+    <string name="txt_enable_offline_mode">Enable offline mode</string>
+    <string name="txt_adjust_volume">Adjust volume</string>
+    <string name="txt_select_a_language">Select a language</string>
+    <string name="txt_choose_lang_for_quiz">Выбрать язык для квиза</string>
+    <string name="txt_english_lang">Английский язык</string>
+    <string name="txt_russian_lang">Русский язык</string>
+    <string name="txt_random_choose">Выбирать случайным образом</string>
     <string-array name="languages">
         <item>English</item>
         <item>Русский</item>

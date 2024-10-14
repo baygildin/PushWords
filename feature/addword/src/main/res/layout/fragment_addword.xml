@@ -27,7 +27,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Add the word to your vocabulary"
+                android:text="@string/add_the_word_to_your_vocabulary"
                 android:id="@+id/tv_custom_words_loader"
                 android:gravity="center"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
@@ -50,7 +50,7 @@
                     android:id="@+id/originalWordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Original Word" />
+                    android:hint="@string/original_word" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -65,14 +65,14 @@
                     android:id="@+id/translatedWordEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Translated Word" />
+                    android:hint="@string/translated_word" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/isLearnedCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Is Learned"
+                android:text="@string/ch_box_is_learned"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/translatedWordInputLayout" />
@@ -89,7 +89,7 @@
                 android:id="@+id/saveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save"
+                android:text="@string/tv_btn_save"
                 app:layout_constraintEnd_toStartOf="@id/cancelButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/difficultyLevelSpinner" />
@@ -98,7 +98,7 @@
                 android:id="@+id/cancelButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Back"
+                android:text="@string/btn_tv_back"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/saveButton"
                 app:layout_constraintTop_toBottomOf="@id/difficultyLevelSpinner" />
@@ -129,7 +129,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Select English Level to Load Words"
+                android:text="@string/tv_select_english_level_to_load_words"
                 android:id="@+id/tv_level_description"
                 android:gravity="center"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
@@ -148,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:stateListAnimator="@animator/button_animator"
-                android:text="C1 (level 5)"
+                android:text="@string/txt_c1_level_5"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:cornerRadius="16dp"
@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:stateListAnimator="@animator/button_animator"
-                android:text="C2 (level 6)"
+                android:text="@string/txt_c2_level_6"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:layout_marginBottom="8dp"
@@ -189,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:stateListAnimator="@animator/button_animator"
-                android:text="B1 (level 3)"
+                android:text="@string/txt_b1_level_3"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:layout_marginBottom="8dp"
@@ -209,7 +209,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:stateListAnimator="@animator/button_animator"
-                android:text="B2 (level 4)"
+                android:text="@string/txt_b2_level_4"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:layout_marginBottom="8dp"
@@ -229,7 +229,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:stateListAnimator="@animator/button_animator"
-                android:text="A1 (level 1)"
+                android:text="@string/txt_a1_level_1"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:cornerRadius="16dp"
@@ -248,7 +248,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:stateListAnimator="@animator/button_animator"
-                android:text="A2 (level 2)"
+                android:text="@string/txt_a2_level_2"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:cornerRadius="16dp"
@@ -284,7 +284,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=   "Upload your words from a .txt file"
+                android:text=   "@string/txt_upload_your_words_from_a_txt_file"
                 android:id="@+id/tv_load_txt_file"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 android:textColor="@color/black"
@@ -301,7 +301,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:icon="@drawable/ic_file_download_24"
-                android:text="Import your text files"
+                android:text="@string/txt_import_your_text_files"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:cardElevation="4dp"
@@ -323,7 +323,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_outline_help_24"
-                android:contentDescription="Help"
+                android:contentDescription="@string/txt_help"
                 android:layout_gravity="end"
                 android:padding="8dp"
                 android:layout_marginBottom="8dp"

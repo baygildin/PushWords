@@ -8,4 +8,6 @@
     <string name="Fr">Пт</string>
     <string name="Sa">Сб</string>
     <string name="Su">Вс</string>
+    <string name="txt_all_time_progress">Прогресс за все время</string>
+    <string name="txt_weekly_progress">Прогресс за неделю</string>
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="txt_word_to_guess">Word to guess</string>
+    <string name="txt_lets_start_quiz">Давай начнем квиз\nУгадай перевод слова\n😎</string>
+    <string name="txt_start">Start</string>
+    <string name="txt_answer_1">answer 1</string>
+    <string name="txt_answer_2">answer 2</string>
+    <string name="txt_answer_3">answer 3</string>
+    <string name="txt_answer_4">answer 4</string>
+</resources>

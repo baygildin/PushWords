@@ -70,7 +70,7 @@ class SettingsFragment : Fragment() {
                 launch {
                     viewModel.userName.collectLatest { name ->
                         binding.edittextUserName.setText(name)
-                        binding.tvUserNameDisplay.text = "Ваше имя: $name"
+                        binding.tvUserNameDisplay.text = getString(R.string.txt_your_name_display, name)
                     }
                 }
                 launch {

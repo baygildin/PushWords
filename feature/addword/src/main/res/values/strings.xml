@@ -4,5 +4,22 @@
     <string name="txt_help_makefile_txt_example">word = слово\nbetter = лучше\nno-smoking = курение запрещено</string>
     <string name="txt_help_makefile_txt_explanation">Each line should have an English word, an equal sign =, and its translation in Russian.</string>
     <string name="txt_help_makefile_txt_important">Important: Make sure to choose the correct encoding for your text file. We recommend using UTF-8 or Unicode to avoid issues with character display.</string>
+    <string name="add_the_word_to_your_vocabulary">Add the word to your vocabulary</string>
+    <string name="original_word">Original Word</string>
+    <string name="translated_word">Translated Word</string>
+    <string name="ch_box_is_learned">Is Learned</string>
+    <string name="tv_btn_save">Save</string>
+    <string name="btn_tv_back">Back</string>
+    <string name="tv_select_english_level_to_load_words">Select English Level to Load Words</string>
+    <string name="txt_c1_level_5">C1 (level 5)</string>
+    <string name="txt_c2_level_6">C2 (level 6)</string>
+    <string name="txt_b1_level_3">B1 (level 3)</string>
+    <string name="txt_b2_level_4">B2 (level 4)</string>
+    <string name="txt_a1_level_1">A1 (level 1)</string>
+    <string name="txt_a2_level_2">A2 (level 2)</string>
+    <string name="txt_upload_your_words_from_a_txt_file">Upload your words from a .txt file</string>
+    <string name="txt_import_your_text_files">Import your text files</string>
+    <string name="txt_help">Help</string>
+    <string name="txt_how_to_use_the_app">How to Use the App</string>
 </resources>
 

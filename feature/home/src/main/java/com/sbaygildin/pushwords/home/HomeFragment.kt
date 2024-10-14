@@ -78,8 +78,14 @@ class HomeFragment : Fragment() {
                     binding?.wordButtonsContainer?.visibility = View.GONE
                     viewModel.updateCache()
 
-                    binding?.tvWordToGuess?.text =
-                        "Количество правильных ответов: ${viewModel.correctAnswer}\nКоличество неправильных ответов: ${viewModel.wrongAnswer}\nКоличество угаданных ответов с первого раза: ${viewModel.guessedRightAway}\nКоличество новых изученных слов: ${viewModel.learnedWords}"
+                    binding?.tvWordToGuess?.text = getString(
+                        R.string.txt_word_to_guess_stats,
+                        viewModel.correctAnswer,
+                        viewModel.wrongAnswer,
+                        viewModel.guessedRightAway,
+                        viewModel.learnedWords
+                    )
+
                 } else {
                     roundCounter++
                     if (viewModel.getCachedWords().isEmpty()) {
@@ -150,7 +156,9 @@ class HomeFragment : Fragment() {
                                         viewModel.learnedWords
                                     )
 
-                                    binding?.tvLetsStartQuiz?.text = "Правильно!\nВы молодец✨"
+                                    binding?.tvLetsStartQuiz?.text = getString(R.string.txt_correct_answer)
+
+
 //                                    button?.animate()
 //                                        ?.translationYBy(-600f)
 //                                        ?.alpha(0f)
@@ -172,8 +180,7 @@ class HomeFragment : Fragment() {
                                 } else {
                                     firstAttempt = false
                                     viewModel.wrongAnswer += 1
-                                    binding?.tvLetsStartQuiz?.text =
-                                        "Неправильный ответ⛔\nПопробуйте ещё раз"
+                                    binding?.tvLetsStartQuiz?.text = getString(R.string.txt_correct_answer)
                                     button?.isEnabled = false
                                     button?.animate()
                                         ?.translationYBy(+300f)

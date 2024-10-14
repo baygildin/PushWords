@@ -126,11 +126,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/btn_option_2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
-
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addWordButton"
             android:layout_width="wrap_content"

@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PushWords</string>
-    <string name="Mo">Пн</string>
-    <string name="Tu">Вт</string>
-    <string name="We">Ср</string>
-    <string name="Th">Чт</string>
-    <string name="Fr">Пт</string>
-    <string name="Sa">Сб</string>
-    <string name="Su">Вс</string>
-    <string name="txt_all_time_progress">Прогресс за все время</string>
-    <string name="txt_weekly_progress">Прогресс за неделю</string>
+    <string name="Mo">Mon</string>
+    <string name="Tu">Tue</string>
+    <string name="We">Wed</string>
+    <string name="Th">Thu</string>
+    <string name="Fr">Fri</string>
+    <string name="Sa">Sat</string>
+    <string name="Su">Sun</string>
+    <string name="progress_for_day">Day progress</string>
+    <string name="txt_all_time_progress">All-time progress</string>
+    <string name="txt_weekly_progress">Weekly progress</string>
+    <string name="learned_words">Learned words</string>
+    <string name="guessed_right_away">Guessed the first time</string>
+    <string name="repeated_answers">Repeated words</string>
+    <string name="wrong_answers">Wrong answers</string>
+    <string name="your_progress">Your progress</string>
+    <string name="correct_answers">Correct answers</string>
 </resources>

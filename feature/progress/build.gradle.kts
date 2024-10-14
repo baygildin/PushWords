@@ -62,7 +62,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
 
     implementation(project(":navigation"))
-
+    implementation(project(":common"))
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation(project(":data:di"))
     implementation(project(":data:model"))

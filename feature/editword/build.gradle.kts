@@ -57,14 +57,12 @@ dependencies {
     val coroutines_version = "1.9.0"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
-
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-
     implementation(project(":navigation"))
     implementation(project(":data:di"))
     implementation(project(":data:model"))
-    implementation("com.google.code.gson:gson:2.11.0")
+    implementation(project(":common"))
 
 
 }

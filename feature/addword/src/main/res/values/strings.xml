@@ -5,8 +5,8 @@
     <string name="txt_help_makefile_txt_explanation">Each line should have an English word, an equal sign =, and its translation in Russian.</string>
     <string name="txt_help_makefile_txt_important">Important: Make sure to choose the correct encoding for your text file. We recommend using UTF-8 or Unicode to avoid issues with character display.</string>
     <string name="add_the_word_to_your_vocabulary">Add the word to your vocabulary</string>
-    <string name="original_word">Original Word</string>
-    <string name="translated_word">Translated Word</string>
+    <string name="word_added">Word added!</string>
+    <string name="words_imported">Words imported!</string>
     <string name="ch_box_is_learned">Is Learned</string>
     <string name="tv_btn_save">Save</string>
     <string name="btn_tv_back">Back</string>

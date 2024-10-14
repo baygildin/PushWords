@@ -1,17 +1,14 @@
 package com.sbaygildin.pushwords.progress
 
-import android.graphics.Color
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -21,15 +18,14 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
-import com.sbaygildin.pushwords.data.model.DailyAverage
 import com.sbaygildin.pushwords.data.di.ProgressRepository
-import com.sbaygildin.pushwords.data.model.ProgressData
+import com.sbaygildin.pushwords.data.model.DailyAverage
 import com.sbaygildin.pushwords.progress.databinding.FragmentProgressBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.Collections
 import javax.inject.Inject
-import java.util.*
 
 @AndroidEntryPoint
 class ProgressFragment : Fragment() {
@@ -39,7 +35,6 @@ class ProgressFragment : Fragment() {
 
     @Inject
     lateinit var progressRepository: ProgressRepository
-
 
 
     override fun onCreateView(
@@ -60,18 +55,16 @@ class ProgressFragment : Fragment() {
             setupBarChart(dailyData)
             viewModel.fetchProgressData(currentTime)
             updateProgressPieChart()
-
-
             val progressDataList = progressRepository.getProgressData(startTime, currentTime)
             viewModel.calculateProgressData(progressDataList)
             val switchProgressType = binding.switchProgressType
             switchProgressType.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     viewModel.dailyToAllTimeSwitcher = false
-                    switchProgressType.text = "Прогресс за день"
+                    switchProgressType.text = getString(R.string.progress_for_day)
                 } else {
                     viewModel.dailyToAllTimeSwitcher = true
-                    switchProgressType.text = "Прогресс за все время"
+                    switchProgressType.text = getString(R.string.txt_all_time_progress)
                 }
                 lifecycleScope.launch {
                     viewModel.fetchProgressData(currentTime)
@@ -82,21 +75,33 @@ class ProgressFragment : Fragment() {
         }
     }
 
-
     private fun updateProgressPieChart() {
         val pieEntries = ArrayList<PieEntry>()
 
-        pieEntries.add(PieEntry(viewModel.totalLearnedWords.toFloat(), "Выученные слова"))
-        pieEntries.add(PieEntry(viewModel.guessedRightAway.toFloat(), "Угаданные с первого раза"))
-        pieEntries.add(PieEntry(viewModel.correctAnswer.toFloat(), "Повторённые слова"))
-        pieEntries.add(PieEntry(viewModel.wrongAnswer.toFloat(), "Неправильные ответы"))
+        pieEntries.add(
+            PieEntry(
+                viewModel.totalLearnedWords.toFloat(),
+                getString(R.string.learned_words)
+            )
+        )
+        pieEntries.add(
+            PieEntry(
+                viewModel.guessedRightAway.toFloat(),
+                getString(R.string.guessed_right_away)
+            )
+        )
+        pieEntries.add(
+            PieEntry(
+                viewModel.correctAnswer.toFloat(),
+                getString(R.string.repeated_answers)
+            )
+        )
+        pieEntries.add(PieEntry(viewModel.wrongAnswer.toFloat(), getString(R.string.wrong_answers)))
 
-        val pieDataSet = PieDataSet(pieEntries, "Ваш прогресс")
+        val pieDataSet = PieDataSet(pieEntries, getString(R.string.your_progress))
         pieDataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
         pieDataSet.valueTextSize = 14f
-
         val pieData = PieData(pieDataSet)
-
         binding.pieChartProgress.run {
             data = pieData
             description.isEnabled = false
@@ -112,10 +117,8 @@ class ProgressFragment : Fragment() {
     private fun setupBarChart(dailyData: List<DailyAverage>) {
         val correctEntries = ArrayList<BarEntry>()
         val wrongEntries = ArrayList<BarEntry>()
-
         val correctAnswersPerDay = mutableMapOf<String, Float>()
         val wrongAnswersPerDay = mutableMapOf<String, Float>()
-        Log.d("ProgressData", "Daily Data: $dailyData")
         val calendar = Calendar.getInstance()
         val currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
         val labels = arrayOf(
@@ -158,11 +161,11 @@ class ProgressFragment : Fragment() {
             wrongEntries.add(BarEntry(index.toFloat(), wrongAnswersPerDay[day] ?: 0f))
         }
 
-        val correctDataSet = BarDataSet(correctEntries, "Правильные ответы")
+        val correctDataSet = BarDataSet(correctEntries, getString(R.string.correct_answers))
         correctDataSet.color = ColorTemplate.COLORFUL_COLORS[1]
         correctDataSet.valueTextSize = 12f
 
-        val wrongDataSet = BarDataSet(wrongEntries, "Неправильные ответы")
+        val wrongDataSet = BarDataSet(wrongEntries, getString(R.string.wrong_answers))
         wrongDataSet.color = ColorTemplate.COLORFUL_COLORS[0]
         wrongDataSet.valueTextSize = 14f
 
@@ -170,7 +173,6 @@ class ProgressFragment : Fragment() {
         val groupSpace = 0.18f
         val barSpace = 0.03f
         val barWidth = 0.35f
-
 
         //delete 0.0 value
         correctDataSet.setDrawValues(true)
@@ -186,9 +188,7 @@ class ProgressFragment : Fragment() {
             }
         }
 
-
         barData.barWidth = barWidth
-
         binding.weeklyProgressChart.run {
             description.isEnabled = false
             data = barData
@@ -206,7 +206,6 @@ class ProgressFragment : Fragment() {
             setFitBars(true)
             invalidate()
         }
-
 
         val xAxis = binding.weeklyProgressChart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(labels)
@@ -233,7 +232,6 @@ class ProgressFragment : Fragment() {
             setDrawGridLines(false)
         }
         binding.weeklyProgressChart.axisRight.isEnabled = false
-
     }
 
     override fun onDestroyView() {

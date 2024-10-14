@@ -1,16 +1,14 @@
 package com.sbaygildin.pushwords.home
 
 import android.media.MediaPlayer
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.sbaygildin.pushwords.data.model.WordTranslation
 import com.sbaygildin.pushwords.home.databinding.FragmentHomeBinding
 import com.sbaygildin.pushwords.navigation.Navigator
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +26,6 @@ class HomeFragment : Fragment() {
     private var mediaPlayer: MediaPlayer? = null
     private var roundCounter = 0
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,9 +42,7 @@ class HomeFragment : Fragment() {
         binding?.startButton?.setOnClickListener {
             startQuiz()
         }
-
         viewModel.resetCounters()
-
         binding?.addWordButton?.setOnClickListener {
             (activity as Navigator).navigateHomeToAddword()
         }
@@ -70,8 +65,6 @@ class HomeFragment : Fragment() {
                     userPreference
                 }
 
-
-
                 if (roundCounter == 20) {
                     binding?.startButton?.visibility = View.VISIBLE
                     binding?.startButton?.text = "Продолжить"
@@ -89,13 +82,14 @@ class HomeFragment : Fragment() {
                 } else {
                     roundCounter++
                     if (viewModel.getCachedWords().isEmpty()) {
-                        binding?.tvLetsStartQuiz?.text = "Нет доступных слов для повторения"
+                        binding?.tvLetsStartQuiz?.text =
+                            getString(com.sbaygildin.pushwords.common.R.string.no_words_for_repetition)
                         return@collectLatest
                     }
 
                     if (viewModel.getCachedWords().size < 4) {
                         binding?.tvLetsStartQuiz?.text =
-                            "Добавьте еще слов или откройте файл со словами"
+                            getString(com.sbaygildin.pushwords.common.R.string.add_more_words)
                         return@collectLatest
                     }
 
@@ -139,7 +133,6 @@ class HomeFragment : Fragment() {
                                     viewModel.correctAnswer += 1
                                     playCorrectAnswerSound()
 
-
                                     if (firstAttempt) {
                                         viewModel.guessedRightAway += 1
 
@@ -157,25 +150,10 @@ class HomeFragment : Fragment() {
                                     )
 
                                     binding?.tvLetsStartQuiz?.text = getString(R.string.txt_correct_answer)
-
-
-//                                    button?.animate()
-//                                        ?.translationYBy(-600f)
-//                                        ?.alpha(0f)
-//                                        ?.setDuration(1000)
-//                                        ?.withLayer()
-//                                        ?.withEndAction {
-//                                            button.translationY = 0f
-//                                            button.alpha = 1f
-//                                            viewModel.resetCounters()
-//
-//                                        }
-//                                        ?.start()
                                     lifecycleScope.launch {
                                         delay(700)
                                         setupQuiz()
                                     }
-
 
                                 } else {
                                     firstAttempt = false
@@ -202,16 +180,19 @@ class HomeFragment : Fragment() {
         }
     }
 
-
     private fun playCorrectAnswerSound() {
         lifecycleScope.launch {
-            viewModel.volume.collectLatest { volume ->
-                mediaPlayer = MediaPlayer.create(context, R.raw.correct_answer_sound)
-                mediaPlayer?.setVolume(volume, volume)
-                mediaPlayer?.start()
-                mediaPlayer?.setOnCompletionListener {
-                    it.release()
+            try {
+                viewModel.volume.collectLatest { volume ->
+                    mediaPlayer = MediaPlayer.create(context, R.raw.correct_answer_sound)
+                    mediaPlayer?.setVolume(volume, volume)
+                    mediaPlayer?.start()
+                    mediaPlayer?.setOnCompletionListener {
+                        it.release()
+                    }
                 }
+            } catch (e: Exception) {
+                Toast.makeText(context, "Error playing sound: $e", Toast.LENGTH_SHORT).show()
             }
         }
     }

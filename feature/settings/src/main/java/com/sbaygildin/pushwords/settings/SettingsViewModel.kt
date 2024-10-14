@@ -17,13 +17,15 @@ class SettingsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val darkMode: Flow<Boolean> = preferencesManager.darkModeFlow
-    val language: Flow<String> = preferencesManager.languageFlow
     val notifications: Flow<Boolean> = preferencesManager.notificationsFlow
     val volume: Flow<Float> = preferencesManager.volumeFlow
+    val notificationsInterval: Flow<Long> = preferencesManager.notificationIntervalFlow
     val languageForRiddles: Flow<String> = preferencesManager.languageForRiddlesFlow
     val userName: StateFlow<String?> = preferencesManager.userNameFlow.stateIn(
         viewModelScope, SharingStarted.Lazily, null
     )
+    val isQuietModeEnabled: Flow<Boolean> = preferencesManager.isQuietModeEnabledFlow
+
 
     fun setDarkMode(enabled: Boolean) {
         viewModelScope.launch {
@@ -31,11 +33,6 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun setLanguage(language: String) {
-        viewModelScope.launch {
-            preferencesManager.setLanguage(language)
-        }
-    }
     fun setLanguageForRiddles(language: String) {
         viewModelScope.launch {
             preferencesManager.saveLanguageForRiddles(language)
@@ -45,6 +42,17 @@ class SettingsViewModel @Inject constructor(
     fun setNotifications(enabled: Boolean) {
         viewModelScope.launch {
             preferencesManager.setNotifications(enabled)
+        }
+    }
+    fun setNotificationInterval(interval: Long) {
+        viewModelScope.launch {
+            preferencesManager.setNotificationInterval(interval)
+        }
+    }
+
+    fun setQuietModeEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            preferencesManager.setQuietModeEnabled(enabled)
         }
     }
 
@@ -59,4 +67,5 @@ class SettingsViewModel @Inject constructor(
             preferencesManager.setUserName(name)
         }
     }
+
 }

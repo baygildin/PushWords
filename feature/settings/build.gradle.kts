@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     val hilt_version = "2.51.1"
@@ -67,8 +66,6 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":navigation"))
     implementation(project(":data:di"))
-
-
 }
 
 apply(plugin = "kotlin-kapt")

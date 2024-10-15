@@ -21,10 +21,10 @@ class SettingsViewModel @Inject constructor(
     val volume: Flow<Float> = preferencesManager.volumeFlow
     val notificationsInterval: Flow<Long> = preferencesManager.notificationIntervalFlow
     val languageForRiddles: Flow<String> = preferencesManager.languageForRiddlesFlow
+    val isQuietModeEnabled: Flow<Boolean> = preferencesManager.isQuietModeEnabledFlow
     val userName: StateFlow<String?> = preferencesManager.userNameFlow.stateIn(
         viewModelScope, SharingStarted.Lazily, null
     )
-    val isQuietModeEnabled: Flow<Boolean> = preferencesManager.isQuietModeEnabledFlow
 
 
     fun setDarkMode(enabled: Boolean) {

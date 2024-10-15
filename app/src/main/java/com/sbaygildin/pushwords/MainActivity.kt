@@ -82,24 +82,28 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
                     }
                     true
                 }
+
                 R.id.settings_navigation -> {
                     if (navController.currentDestination?.id != R.id.home_navigation) {
                         navController.navigate(R.id.settings_navigation)
                     }
                     true
                 }
+
                 R.id.wordlist_navigation -> {
                     if (navController.currentDestination?.id != R.id.home_navigation) {
                         navController.navigate(R.id.wordlist_navigation)
                     }
                     true
                 }
+
                 R.id.progress_navigation -> {
                     if (navController.currentDestination?.id != R.id.home_navigation) {
                         navController.navigate(R.id.progress_navigation)
                     }
                     true
                 }
+
                 else -> false
             }
         }
@@ -125,9 +129,7 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
                 set(Calendar.MINUTE, 0)
 
             }
-            if (isQuietModeEnabled && currentTime.after(quietStart) || currentTime.before(quietEnd)) {
-                //вTODO()
-            } else {
+            if (!(isQuietModeEnabled && currentTime.after(quietStart) || currentTime.before(quietEnd))) {
                 val workRequest =
                     PeriodicWorkRequestBuilder<QuizReminderWorker>(interval, TimeUnit.HOURS)
                         .build()

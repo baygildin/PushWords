@@ -40,7 +40,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     val hilt_version = "2.51.1"
@@ -56,17 +55,14 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-
     val coroutines_version = "1.9.0"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
-
     implementation(project(":navigation"))
     implementation(project(":common"))
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation(project(":data:di"))
     implementation(project(":data:model"))
-
 }
 kapt {
     correctErrorTypes = true

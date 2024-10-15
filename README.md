@@ -46,7 +46,7 @@
 - **Quiz Answer Selection Screen / Экран выбора ответа (квиза)**  
   <img src="assets/4.png" alt="Quiz Answer Selection Screen" width="300"/>
 
-- **My Dictionary (User's) / Мой словарь (пользователя)**  
+- **My Vocabulary (User's) / Мой словарь (пользователя)**  
   <img src="assets/5.png" alt="My Dictionary" width="300"/>
 
 - **Settings Screen / Экран настроек**  

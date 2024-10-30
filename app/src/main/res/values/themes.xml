@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="Base.Theme.PushWords.Day" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorSurface">@color/background_light</item>
         <item name="colorOnSurface">@color/black</item>
@@ -6,5 +7,14 @@
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/secondary_light</item>
         <item name="colorOnSecondary">@color/black</item>
+
     </style>
+    <style name="Theme.SplashScreen" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+
+
+
+
 </resources>

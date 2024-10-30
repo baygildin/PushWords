@@ -1,7 +1,6 @@
 package com.sbaygildin.pushwords.editword
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +8,11 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.sbaygildin.pushwords.data.model.DifficultyLevel
 import com.sbaygildin.pushwords.data.model.WordTranslation
 import com.sbaygildin.pushwords.editword.databinding.FragmentEditwordBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EditwordFragment : Fragment() {
@@ -37,24 +34,25 @@ class EditwordFragment : Fragment() {
 
         val receivedId = args.id.toLongOrNull()
         if (receivedId != null) {
-            Log.d("Editwordss", "Received ID: $receivedId")
             loadWordData(receivedId)
         } else {
-            Toast.makeText(requireContext(), "Invalid ID", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(com.sbaygildin.pushwords.common.R.string.invalid_id),
+                Toast.LENGTH_SHORT
+            ).show()
             requireActivity().onBackPressedDispatcher.onBackPressed()
-            Log.e("Editwordss", "Received ID is null or not valid!")
         }
 
         val difficultyLevels = DifficultyLevel.values().map { it.name }
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, difficultyLevels)
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, difficultyLevels)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.difficultyLevelSpinner.adapter = adapter
         binding.difficultyLevelSpinner.setSelection(difficultyLevels.indexOf(DifficultyLevel.MEDIUM.name))
-
         binding.cancelButton.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-
         binding.saveButton.setOnClickListener {
             saveWord(receivedId)
         }
@@ -64,7 +62,11 @@ class EditwordFragment : Fragment() {
         viewModel.getWordTranslationById(wordId) { wordTranslation ->
             wordTranslation?.let { populateFields(it) }
                 ?: run {
-                    Toast.makeText(requireContext(), "Word not found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.word_not_found),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
         }
@@ -74,7 +76,6 @@ class EditwordFragment : Fragment() {
         binding.originalWordEditText.setText(word.originalWord)
         binding.translatedWordEditText.setText(word.translatedWord)
         binding.isLearnedCheckBox.isChecked = word.isLearned
-
         val difficultyLevels = DifficultyLevel.values().map { it.name }
         binding.difficultyLevelSpinner.setSelection(difficultyLevels.indexOf(word.difficultyLevel.name))
     }
@@ -83,8 +84,8 @@ class EditwordFragment : Fragment() {
         val originalWord = binding.originalWordEditText.text.toString().trim()
         val translatedWord = binding.translatedWordEditText.text.toString().trim()
         val isLearned = binding.isLearnedCheckBox.isChecked
-        val difficultyLevel = DifficultyLevel.valueOf(binding.difficultyLevelSpinner.selectedItem.toString())
-
+        val difficultyLevel =
+            DifficultyLevel.valueOf(binding.difficultyLevelSpinner.selectedItem.toString())
         if (validateFields(originalWord, translatedWord)) {
             receivedId?.let {
                 viewModel.getWordTranslationById(it) { wordTranslation ->
@@ -107,21 +108,20 @@ class EditwordFragment : Fragment() {
 
     private fun validateFields(originalWord: String, translatedWord: String): Boolean {
         var isValid = true
-
         if (originalWord.isEmpty()) {
-            binding.originalWordInputLayout.error = getString(R.string.tv_this_field_is_required)
+            binding.originalWordInputLayout.error =
+                getString(com.sbaygildin.pushwords.common.R.string.tv_this_field_is_required)
             isValid = false
         } else {
             binding.originalWordInputLayout.error = null
         }
-
         if (translatedWord.isEmpty()) {
-            binding.translatedWordInputLayout.error = getString(R.string.tv_this_field_is_required)
+            binding.translatedWordInputLayout.error =
+                getString(com.sbaygildin.pushwords.common.R.string.tv_this_field_is_required)
             isValid = false
         } else {
             binding.translatedWordInputLayout.error = null
         }
-
         return isValid
     }
 

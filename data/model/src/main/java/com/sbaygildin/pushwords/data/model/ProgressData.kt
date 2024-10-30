@@ -3,7 +3,6 @@ package com.sbaygildin.pushwords.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity(tableName = "progress_data")
 data class ProgressData(

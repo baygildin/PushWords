@@ -4,25 +4,26 @@ plugins {
     alias(libs.plugins.androidx.navigation.safeargs)
     alias(libs.plugins.org.jetbrains.kotlin.kapt)
     id("com.google.dagger.hilt.android")
-
-
-
 }
 
 android {
     namespace = "com.sbaygildin.pushwords"
     compileSdk = 34
-
     defaultConfig {
         applicationId = "com.sbaygildin.pushwords"
-        minSdk = 24
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+        buildFeatures {
+            viewBinding = true
+            dataBinding = true
+        }
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -42,12 +43,12 @@ android {
 }
 
 dependencies {
-
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.hilt.common)
     implementation(libs.androidx.hilt.work)
+    implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation(project(":common"))
     val hilt_version = "2.51.1"
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")

@@ -2,5 +2,14 @@
 <resources>
     <string name="app_name">PushWords</string>
     <string name="add_a_new_word">Add a new word</string>
-    <string name="add_word_button">Add a new word</string>
+    <string name="add_word_button">Button: Add a new word</string>
+    <string name="tv_this_field_is_required">This field is required</string>
+    <string name="txt_original_word">Original Word</string>
+    <string name="txt_translated_word">Translated Word</string>
+    <string name="word_updated">Word updated!</string>
+    <string name="error_updating_word">Error updating word</string>
+    <string name="invalid_id">Invalid ID</string>
+    <string name="word_not_found">Word not found</string>
+    <string name="add_more_words">Add more words or open a file with words</string>
+    <string name="no_words_for_repetition">No available words for repetition</string>
 </resources>

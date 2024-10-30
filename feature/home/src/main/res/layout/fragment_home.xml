@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             android:gravity="center"
-            android:text="Давай начнем квиз\nУгадай перевод слова\n😎"
+            android:text="@string/txt_lets_start_quiz"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,9 +43,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center"
-            android:text="Word to guess"
+            android:text="@string/txt_word_to_guess"
             android:textSize="22sp"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_lets_start_quiz" />
@@ -53,7 +54,7 @@
             android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start"
+            android:text="@string/txt_start"
             android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/button_neumorphism"
-                android:text="answer 1"
+                android:text="@string/txt_answer_1"
                 android:textColor="@color/main_text_color"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/button_neumorphism"
-                android:text="answer 2"
+                android:text="@string/txt_answer_2"
                 android:textColor="@color/main_text_color"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/btn_option_1"
@@ -104,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/button_neumorphism"
-                android:text="answer 3"
+                android:text="@string/txt_answer_3"
                 android:textColor="@color/main_text_color"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -117,18 +118,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:background="@drawable/button_neumorphism"
-                android:text="answer 4"
+                android:text="@string/txt_answer_4"
                 android:textColor="@color/main_text_color"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@+id/btn_option_3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_option_2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addWordButton"

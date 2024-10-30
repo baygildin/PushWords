@@ -1,7 +1,6 @@
 package com.sbaygildin.pushwords.data.di
 
 import com.sbaygildin.pushwords.data.model.DailyAverage
-import com.sbaygildin.pushwords.data.model.HourlyAverage
 import com.sbaygildin.pushwords.data.model.ProgressData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -13,12 +12,14 @@ class ProgressRepository @Inject constructor(private val progressDataDao: Progre
         progressDataDao.insertProgressData(progressData)
     }
 
-    suspend fun getHourlyAverages(startTimestamp: Long, endTimestamp: Long): List<HourlyAverage> = withContext(Dispatchers.IO) {
-        progressDataDao.getHourlyAverages(startTimestamp, endTimestamp)
-    }
-
     suspend fun getDailyAverages(startTimestamp: Long, endTimestamp: Long): List<DailyAverage> = withContext(Dispatchers.IO) {
         progressDataDao.getDailyAverages(startTimestamp, endTimestamp)
     }
+    suspend fun getProgressData(startTimestamp: Long, endTimestamp: Long): List<ProgressData> = withContext(Dispatchers.IO) {
+        progressDataDao.getProgressData(startTimestamp, endTimestamp)
+    }
+
+
+
 }
 

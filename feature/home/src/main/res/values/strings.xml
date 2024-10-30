@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="txt_word_to_guess">Word to guess</string>
+    <string name="txt_lets_start_quiz">Let\'s start the quiz\nGuess the word translation\n😎</string>
+    <string name="txt_start">Start</string>
+    <string name="txt_answer_1">Answer 1</string>
+    <string name="txt_answer_2">Answer 2</string>
+    <string name="txt_answer_3">Answer 3</string>
+    <string name="txt_answer_4">Answer 4</string>
+    <string name="txt_word_to_guess_stats">
+    Number of correct answers: %1$d\n
+    Number of incorrect answers: %2$d\n
+    Number of first-try correct answers: %3$d\n
+    Number of new words learned: %4$d
+    </string>
+    <string name="txt_correct_answer">Correct!\nWell done✨</string>
+    <string name="txt_wrong_answer">Incorrect answer⛔\nTry again</string>
+</resources>

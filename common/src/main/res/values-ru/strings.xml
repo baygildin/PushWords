@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PushWords</string>
-    <string name="add_a_new_word">Add a new word</string>
-    <string name="add_word_button">Add a new word</string>
+    <string name="add_a_new_word">Добавить новое слово</string>
+    <string name="add_word_button">Кнопка: добавить новое слово</string>
+    <string name="tv_this_field_is_required">Это поле необходимо заполнить</string>
+    <string name="txt_original_word">Оригинальное слово</string>
+    <string name="txt_translated_word">Переведённое слово</string>
+    <string name="word_updated">Слово обновлено!</string>
+    <string name="error_updating_word">Ошибка обновления слова</string>
+    <string name="invalid_id">Неверный ID</string>
+    <string name="word_not_found">Слово не найдено</string>
+    <string name="add_more_words">Добавьте еще слов или откройте файл со словами</string>
+    <string name="no_words_for_repetition">Нет доступных слов для повторения</string>
 </resources>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -17,7 +15,7 @@
             android:id="@+id/tvUserNameDisplay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ваше имя: "
+            android:text="@string/txt_your_name"
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingTop="16dp" />
@@ -26,29 +24,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:hint="Enter your name" />
+            android:hint="@string/txt_enter_your_name" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/saveNameButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="@string/txt_save"
             android:layout_gravity="bottom|start" />
-
-        <!-- Title for RadioGroup -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choose an option"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:paddingBottom="8dp" />
 
         <!-- Switch -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enable notifications"
+            android:text="@string/txt_enable_notifications"
             android:textSize="16sp"
             android:textStyle="bold"
             android:paddingTop="16dp"
@@ -58,44 +47,52 @@
             android:id="@+id/switch_notifications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show words and translations in push notifications" />
+            android:text="@string/txt_show_words_and_translations_in_push_notifications" />
+
 
         <!-- Spinner (Notifications) -->
         <TextView
             android:id="@+id/tv_spinner_notifications_frequency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select the frequency of notifications"
+            android:text="@string/txt_select_the_frequency_of_notifications"
             android:textSize="16sp"
             android:textStyle="bold"
             android:paddingTop="16dp"
             android:paddingBottom="8dp" />
 
+        <Spinner
+            android:id="@+id/spinner_notifications_frequency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/notification_frequencies" />
+
+
         <!-- CheckBox -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select preferences"
+            android:text="@string/txt_select_preferences"
             android:textSize="16sp"
             android:textStyle="bold"
             android:paddingTop="16dp"
             android:paddingBottom="8dp" />
+        <CheckBox
+            android:id="@+id/checkbox_quiet_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_chb_dont_disturb_21_to_9" />
 
         <CheckBox
             android:id="@+id/isDarkModeEnabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enable dark mode" />
-
-        <CheckBox
-            android:id="@+id/checkbox_option2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enable offline mode" />
+            android:text="@string/txt_enable_dark_mode" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Adjust volume"
+            android:text="@string/txt_adjust_volume"
             android:textSize="16sp"
             android:textStyle="bold"
             android:paddingTop="16dp"
@@ -108,43 +105,34 @@
             android:max="100"
             android:progress="50"/>
 
-        <!-- Spinner (Dropdown) -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select a language"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp" />
 
-        <Spinner
-            android:id="@+id/spinner_language"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Выбрать язык для квиза"
+            android:text="@string/txt_choose_lang_for_quiz"
             android:textSize="16sp"
             android:textStyle="bold"
             android:paddingBottom="8dp"/>
         <!--  RadioGroup with RadioButtons  -->
-        <RadioGroup android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+        <RadioGroup
+            android:id="@+id/radio_group_language_for_riddles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <RadioButton
-                android:id="@+id/radio_option1"
+                android:id="@+id/radio_option_original_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Английский язык"/>
-            <RadioButton android:id="@+id/radio_option2"
+                android:text="@string/txt_english_lang"/>
+            <RadioButton android:id="@+id/radio_option_translation_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Русский язык"/>
-            <RadioButton android:id="@+id/radio_option3"
+                android:text="@string/txt_russian_lang"/>
+            <RadioButton android:id="@+id/radio_option_random_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="64dp"
-                android:text="Выбирать случайным образом"/>
+                android:text="@string/txt_random_choose"/>
         </RadioGroup>
     </LinearLayout>
 </ScrollView>

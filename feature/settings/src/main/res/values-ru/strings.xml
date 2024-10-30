@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PushWords</string>
+    <string name="txt_your_name_display">Ваше имя: %1$s</string>
+    <string name="txt_enter_your_name">Введите ваше имя</string>
+    <string name="txt_your_name">Ваше имя:</string>
+    <string name="txt_save">Сохранить</string>
+    <string name="txt_choose_an_option">Выберите опцию</string>
+    <string name="txt_enable_notifications">Включить уведомления</string>
+    <string name="txt_show_words_and_translations_in_push_notifications">Показывать слова и переводы в push-уведомлениях</string>
+    <string name="txt_select_the_frequency_of_notifications">Выберите частоту уведомлений</string>
+    <string name="txt_select_preferences">Выберите предпочтения</string>
+    <string name="txt_enable_dark_mode">Включить темный режим</string>
+    <string name="txt_enable_offline_mode">Включить оффлайн режим</string>
+    <string name="txt_adjust_volume">Настроить громкость</string>
+    <string name="txt_select_a_language">Выберите язык</string>
+    <string name="txt_choose_lang_for_quiz">Выбрать язык для квиза</string>
+    <string name="txt_english_lang">Английский язык</string>
+    <string name="txt_russian_lang">Русский язык</string>
+    <string name="txt_random_choose">Выбирать случайным образом</string>
+    <string name="txt_chb_dont_disturb_21_to_9">Не присылать уведомления с 21:00 до 09:00</string>
     <string-array name="languages">
         <item>English</item>
         <item>Русский</item>
         <item>中文</item>
+    </string-array>
+
+    <string-array name="notification_frequencies">
+        <item>15 минут</item>
+        <item>30 минут</item>
+        <item>1 час</item>
+        <item>6 часов</item>
+        <item>1 день</item>
     </string-array>
 </resources>

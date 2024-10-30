@@ -9,7 +9,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 28
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -34,21 +34,17 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     val hilt_version = "2.51.1"
     implementation("com.google.dagger:hilt-android:$hilt_version")
     implementation(libs.androidx.datastore.core.android)
-
     val data_store_version = "1.1.1"
     implementation("androidx.datastore:datastore-preferences:$data_store_version")
     implementation("androidx.datastore:datastore-preferences-core:$data_store_version")
     val coroutines_version = "1.9.0"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
-
-
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     implementation(libs.material)
     testImplementation(libs.junit)

@@ -43,10 +43,18 @@ class EditwordViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 wordTranslationDao.update(updatedWord)
-                Toast.makeText(context, "Word updated!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(com.sbaygildin.pushwords.common.R.string.word_updated),
+                    Toast.LENGTH_SHORT
+                ).show()
                 onSuccess()
             } catch (e: Exception) {
-                Toast.makeText(context, "Error updating word", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(com.sbaygildin.pushwords.common.R.string.error_updating_word),
+                    Toast.LENGTH_SHORT
+                ).show()
                 onFailure()
             }
         }

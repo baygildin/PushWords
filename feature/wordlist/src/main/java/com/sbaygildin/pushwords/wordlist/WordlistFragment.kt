@@ -1,12 +1,12 @@
 package com.sbaygildin.pushwords.wordlist
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sbaygildin.pushwords.navigation.Navigator
@@ -30,13 +30,17 @@ class WordlistFragment : Fragment(R.layout.fragment_wordlist) {
                 if (rowsDeleted > 0) {
                     Toast.makeText(
                         requireContext(),
-                        "${word.originalWord} - ${word.translatedWord} удалено из словаря!",
+                        getString(
+                            R.string.word_deleted_message,
+                            word.originalWord,
+                            word.translatedWord
+                        ),
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
                     Toast.makeText(
                         requireContext(),
-                        "Ошибка при удалении слова!",
+                        getString(R.string.toast_delete_error),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -60,7 +64,6 @@ class WordlistFragment : Fragment(R.layout.fragment_wordlist) {
                 wordlistAdapter.setWords(words)
             }
         }
-
         binding.addWordButton.setOnClickListener {
             (activity as Navigator).navigateWordlistToAddword()
         }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PushWords</string>
     <string name="toast_word_not_found">Word not found</string>
-    <string name="tv_this_field_is_required">This field is required</string>
+    <string name="txt_is_learned">Is Learned</string>
+    <string name="txt_save">Save</string>
+    <string name="txt_back">Back</string>
+    <string name="word_not_found">Word not found</string>
 </resources>

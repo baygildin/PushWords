@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="txt_btn_edit">Редактировать</string>
+    <string name="txt_btn_delete">Удалить</string>
+    <string name="toast_delete_error">Ошибка удаления слова!</string>
+    <string name="word_deleted_message">%1$s - %2$s удалено из словаря!</string>
+</resources>

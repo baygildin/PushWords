@@ -1,4 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PushWords</string>
+    <string name="txt_help_makefile_txt">Если вы хотите добавить слова через текстовый файл, убедитесь, что файл формата .txt содержит слова в следующем виде:</string>
+    <string name="txt_help_makefile_txt_example">word = слово\nbetter = лучше\nno-smoking = курение запрещено</string>
+    <string name="txt_help_makefile_txt_explanation">Каждая строка должна содержать английское слово, знак равенства = и его перевод на русский язык.</string>
+    <string name="txt_help_makefile_txt_important">Важно: Убедитесь, что вы выбрали правильную кодировку для вашего текстового файла. Мы рекомендуем использовать UTF-8 или Unicode, чтобы избежать проблем с отображением символов.</string>
+    <string name="add_the_word_to_your_vocabulary">Добавить слово в словарь</string>
+    <string name="word_added">Слово добавлено!</string>
+    <string name="words_imported">Слова импортированы!</string>
+    <string name="ch_box_is_learned">Выучено</string>
+    <string name="tv_btn_save">Сохранить</string>
+    <string name="btn_tv_back">Назад</string>
+    <string name="tv_select_english_level_to_load_words">Выберите уровень английского для загрузки слов</string>
+    <string name="txt_c1_level_5">C1 (уровень 5)</string>
+    <string name="txt_c2_level_6">C2 (уровень 6)</string>
+    <string name="txt_b1_level_3">B1 (уровень 3)</string>
+    <string name="txt_b2_level_4">B2 (уровень 4)</string>
+    <string name="txt_a1_level_1">A1 (уровень 1)</string>
+    <string name="txt_a2_level_2">A2 (уровень 2)</string>
+    <string name="txt_upload_your_words_from_a_txt_file">Загрузите свои слова из файла .txt</string>
+    <string name="txt_import_your_text_files">Импортировать текстовые файлы</string>
+    <string name="txt_help">Помощь</string>
+    <string name="txt_how_to_use_the_app">Как использовать приложение</string>
 </resources>

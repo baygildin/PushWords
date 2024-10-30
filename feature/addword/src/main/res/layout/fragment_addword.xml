@@ -1,99 +1,334 @@
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="8dp"
-    app:strokeWidth="1dp"
-    app:strokeColor="@color/design_default_color_primary">
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context="com.sbaygildin.pushwords.addword.AddwordFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cv_custom_words_loader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_margin="12dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/design_default_color_primary"
+        app:strokeWidth="1dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/originalWordInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/originalWordEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Original Word" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/translatedWordInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/originalWordInputLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/translatedWordEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Translated Word" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/isLearnedCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Is Learned"
-            app:layout_constraintTop_toBottomOf="@id/translatedWordInputLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
-
-        <Spinner
-            android:id="@+id/difficultyLevelSpinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/isLearnedCheckBox"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            app:layout_constraintTop_toBottomOf="@id/difficultyLevelSpinner"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/cancelButton"
-            android:layout_marginTop="24dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            app:layout_constraintTop_toBottomOf="@id/difficultyLevelSpinner"
-            app:layout_constraintStart_toEndOf="@id/saveButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="24dp" />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/loadFromFileButton"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Load words from .txt file"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/cancelButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:icon="@drawable/ic_file_download_24" />
+            android:padding="16dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_the_word_to_your_vocabulary"
+                android:id="@+id/tv_custom_words_loader"
+                android:gravity="center"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            </TextView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/originalWordInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_custom_words_loader">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/originalWordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/txt_original_word" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/translatedWordInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/originalWordInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/translatedWordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/txt_translated_word" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/isLearnedCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ch_box_is_learned"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/translatedWordInputLayout" />
+
+            <Spinner
+                android:id="@+id/difficultyLevelSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/isLearnedCheckBox" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/saveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_btn_save"
+                app:layout_constraintEnd_toStartOf="@id/cancelButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/difficultyLevelSpinner" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/cancelButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_tv_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/saveButton"
+                app:layout_constraintTop_toBottomOf="@id/difficultyLevelSpinner" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_raw_words_loader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_marginBottom="32dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_custom_words_loader"
+        app:strokeColor="@color/design_default_color_primary"
+        app:strokeWidth="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_select_english_level_to_load_words"
+                android:id="@+id/tv_level_description"
+                android:gravity="center"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            </TextView>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/words_level_c1_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:stateListAnimator="@animator/button_animator"
+                android:text="@string/txt_c1_level_5"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:cornerRadius="16dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_level_description"
+                app:rippleColor="@color/colorAccent"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/words_level_c2_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:stateListAnimator="@animator/button_animator"
+                android:text="@string/txt_c2_level_6"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"
+                app:cornerRadius="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintTop_toBottomOf="@id/tv_level_description"
+                app:rippleColor="@color/colorAccent"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="1dp" />
+
+<!--            B1 level-->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/words_level_b1_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:stateListAnimator="@animator/button_animator"
+                android:text="@string/txt_b1_level_3"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"
+                app:cornerRadius="16dp"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/words_level_c1_button"
+                app:rippleColor="@color/colorAccent"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/words_level_b2_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:stateListAnimator="@animator/button_animator"
+                android:text="@string/txt_b2_level_4"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"
+                app:cornerRadius="16dp"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/words_level_c2_button"
+                app:rippleColor="@color/colorAccent"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/words_level_a1_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:stateListAnimator="@animator/button_animator"
+                android:text="@string/txt_a1_level_1"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:cornerRadius="16dp"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/words_level_b1_button"
+                app:rippleColor="@color/colorAccent"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/words_level_a2_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:stateListAnimator="@animator/button_animator"
+                android:text="@string/txt_a2_level_2"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:cornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintWidth_percent="0.3"
+                app:layout_constraintTop_toBottomOf="@+id/words_level_b2_button"
+                app:rippleColor="@color/colorAccent"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="1dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_txt_file_loader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:layout_marginBottom="32dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_raw_words_loader"
+        app:strokeColor="@color/design_default_color_primary"
+        app:strokeWidth="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=   "@string/txt_upload_your_words_from_a_txt_file"
+                android:id="@+id/tv_load_txt_file"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="@color/black"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            </TextView>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/loadFromFileButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:icon="@drawable/ic_file_download_24"
+                android:text="@string/txt_import_your_text_files"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:cardElevation="4dp"
+                app:cornerRadius="16dp"
+                app:icon="@drawable/ic_file_download_24"
+                app:iconTint="@color/white"
+                app:iconPadding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.552"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_load_txt_file"
+                app:layout_constraintVertical_bias="1.0"
+                app:rippleColor="@color/colorAccent"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="1dp" />
+            <ImageView
+                android:id="@+id/helpIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_outline_help_24"
+                android:contentDescription="@string/txt_help"
+                android:layout_gravity="end"
+                android:padding="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_load_txt_file"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

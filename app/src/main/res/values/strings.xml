@@ -8,4 +8,5 @@
     <string name="notification_add_words">Time to add words to the dictionary</string>
     <string name="notification_word_translation">Word: %1$s — Translation: %2$s</string>
     <string name="word_for_day">Word of the day</string>
+    <string name="quiz_channel_name">Channel for quiz reminders</string>
 </resources>

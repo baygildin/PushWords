@@ -8,4 +8,5 @@
     <string name="notification_add_words">Пора добавить слова в словарь</string>
     <string name="notification_word_translation">Слово: %1$s — Перевод: %2$s</string>
     <string name="word_for_day">Слово дня</string>
+    <string name="quiz_channel_name">Канал для напоминаний о квизах</string>
 </resources>

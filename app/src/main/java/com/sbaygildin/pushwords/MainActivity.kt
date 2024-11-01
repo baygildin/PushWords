@@ -2,10 +2,13 @@ package com.sbaygildin.pushwords
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -35,6 +38,7 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
 
     @Inject
     lateinit var preferencesManager: AppPreferencesManager
+    private val REQUEST_CODE = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +48,7 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 "quiz_channel",
-                "Канал для напоминаний о квизах",
+                getString(R.string.quiz_channel_name),
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             val notificationManager = getSystemService(NotificationManager::class.java)
@@ -54,9 +58,28 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
         lifecycleScope.launch {
             areNotificationsEnabled().collect { isEnabled ->
                 if (isEnabled) {
-                    scheduleQuizNotification()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        if (ContextCompat.checkSelfPermission(
+                                this@MainActivity,
+                                android.Manifest.permission.POST_NOTIFICATIONS
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            scheduleQuizNotification()
+                        } else {
+                            requestPermissions(
+                                arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                                REQUEST_CODE
+                            )
+                        }
+                    } else {
+
+                        scheduleQuizNotification()
+                        Log.d("Notification456", "Quiz notification scheduled in MainActivity")
+
+                    }
                 } else {
                     cancelQuizNotification()
+                    Log.d("Notification456", "Quiz notification cancelled in MainActivity")
                 }
             }
 
@@ -117,9 +140,12 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
 
     override fun scheduleQuizNotification() {
         lifecycleScope.launch {
+            Log.d("Notification456", "Scheduling quiz notification")
             val interval = preferencesManager.notificationIntervalFlow.first()
             val isQuietModeEnabled = preferencesManager.isQuietModeEnabledFlow.first()
             val currentTime = Calendar.getInstance()
+            Log.d("Notification456", "Interval: $interval, Quiet Mode: $isQuietModeEnabled")
+
             val quietStart = Calendar.getInstance().apply {
                 set(Calendar.HOUR_OF_DAY, 21)
                 set(Calendar.MINUTE, 0)
@@ -127,9 +153,12 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
             val quietEnd = Calendar.getInstance().apply {
                 set(Calendar.HOUR_OF_DAY, 9)
                 set(Calendar.MINUTE, 0)
-
             }
+            Log.d("Notification456", "Current time: ${currentTime.time}")
+            Log.d("Notification456", "Quiet start: ${quietStart.time}, Quiet end: ${quietEnd.time}")
+
             if (!(isQuietModeEnabled && currentTime.after(quietStart) || currentTime.before(quietEnd))) {
+//            if (!(isQuietModeEnabled && (currentTime.after(quietStart) && currentTime.before(quietEnd)))) {
                 val workRequest =
                     PeriodicWorkRequestBuilder<QuizReminderWorker>(interval, TimeUnit.HOURS)
                         .build()
@@ -138,6 +167,9 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
                     ExistingPeriodicWorkPolicy.REPLACE,
                     workRequest
                 )
+                Log.d("Notification456", "Quiz notification scheduled")
+            } else {
+                Log.d("Notification456", "Quiet mode is enabled, not scheduling notification")
             }
         }
     }
@@ -150,6 +182,7 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
 
     override fun cancelQuizNotification() {
         WorkManager.getInstance(applicationContext).cancelUniqueWork("quiz_reminder")
+        Log.d("Notification456", "Cancelling quiz notification")
     }
 
     override fun updateTheme(isDarkMode: Boolean) {

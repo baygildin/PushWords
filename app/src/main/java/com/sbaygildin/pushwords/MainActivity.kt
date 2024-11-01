@@ -54,6 +54,16 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
             val notificationManager = getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(channel)
         }
+//        lifecycleScope.launch {
+//            areNotificationsEnabled().collect { isEnabled ->
+//                if (isEnabled) {
+//                    scheduleQuizNotification()
+//                } else {
+//                    cancelQuizNotification()
+//                }
+//            }
+//
+//        }
 
         lifecycleScope.launch {
             areNotificationsEnabled().collect { isEnabled ->
@@ -160,7 +170,7 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
             if (!(isQuietModeEnabled && currentTime.after(quietStart) || currentTime.before(quietEnd))) {
 //            if (!(isQuietModeEnabled && (currentTime.after(quietStart) && currentTime.before(quietEnd)))) {
                 val workRequest =
-                    PeriodicWorkRequestBuilder<QuizReminderWorker>(interval, TimeUnit.HOURS)
+                    PeriodicWorkRequestBuilder<QuizReminderWorker>(interval, TimeUnit.MILLISECONDS)
                         .build()
                 WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
                     "quiz_reminder",

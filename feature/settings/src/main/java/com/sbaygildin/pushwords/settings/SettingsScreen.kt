@@ -2,9 +2,12 @@ package com.sbaygildin.pushwords.settings
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
@@ -168,31 +171,67 @@ fun LanguageSelectionScreen(
             fontSize = 16.sp,
             modifier = Modifier.padding(top = 8.dp)
         )
-        RadioButton(
-            selected = (selectedOption == "originalLanguage"),
-            onClick = {
-                selectedOption = "originalLanguage"
-                onLanguageChange("originalLanguage")
-            }
-        )
-        Text("Original Language")
+        Row(Modifier
+            .fillMaxWidth()
+            .selectable(
+                selected = (selectedOption == "originalLanguage"),
+                onClick = {
+                    selectedOption = "originalLanguage"
+                    onLanguageChange("originalLanguage")
+                }
+            ),
+            verticalAlignment = Alignment.CenterVertically)
+        {
+            RadioButton(
+                selected = (selectedOption == "originalLanguage"),
+                onClick = {
+                    selectedOption = "originalLanguage"
+                    onLanguageChange("originalLanguage")
+                }
+            )
+            Text("Original Language", fontSize = 16.sp)
+        }
 
-        RadioButton(
-            selected = (selectedOption == "translationLanguage"),
-            onClick = {
-                selectedOption = "translationLanguage"
-                onLanguageChange("translationLanguage")
-            }
-        )
-        Text("Translation Language")
+        Row(Modifier
+            .fillMaxWidth()
+            .selectable(
+                selected = (selectedOption == "translationLanguage"),
+                onClick = {
+                    selectedOption = "translationLanguage"
+                    onLanguageChange("translationLanguage")
+                }
+            ),
+            verticalAlignment = Alignment.CenterVertically)
+        {
+            RadioButton(
+                selected = (selectedOption == "translationLanguage"),
+                onClick = {
+                    selectedOption = "translationLanguage"
+                    onLanguageChange("translationLanguage")
+                }
+            )
+            Text("Translation Language", fontSize = 16.sp)
+        }
 
-        RadioButton(
-            selected = (selectedOption == "random"),
-            onClick = {
-                selectedOption = "random"
-                onLanguageChange("random")
-            }
-        )
-        Text("Random Language")
+        Row(Modifier
+            .fillMaxWidth()
+            .selectable(
+                selected = (selectedOption == "random"),
+                onClick = {
+                    selectedOption = "random"
+                    onLanguageChange("random")
+                }
+            ),
+            verticalAlignment = Alignment.CenterVertically)
+        {
+            RadioButton(
+                selected = (selectedOption == "random"),
+                onClick = {
+                    selectedOption = "random"
+                    onLanguageChange("random")
+                }
+            )
+            Text("Random Language", fontSize = 16.sp)
+        }
     }
 }

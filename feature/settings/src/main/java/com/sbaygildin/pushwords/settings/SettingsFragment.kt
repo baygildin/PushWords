@@ -42,7 +42,11 @@ class SettingsFragment : Fragment() {
 
                 val userName = viewModel.userName.collectAsState(initial = "").value ?: ""
                 val languageForRiddles =
-                    viewModel.languageForRiddles.collectAsState(initial = "originalLanguage").value
+                    viewModel.languageForRiddles.collectAsState(initial = "random").value
+                Log.d(
+                    "LanguageSelection",
+                    "in SettingsFragment Language for riddles: $languageForRiddles"
+                )
                 val isQuietModeEnabled =
                     viewModel.isQuietModeEnabled.collectAsState(initial = false).value
 

@@ -7,7 +7,6 @@ import com.sbaygildin.pushwords.data.model.WordTranslation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -27,7 +26,9 @@ class WordlistViewModel @Inject constructor(
         }
     }
 
-    suspend fun deleteWord(wordId: Long): Int {
-        return wordTranslationDao.deleteWordTranslationById(wordId)
+    fun deleteWord(wordId: Long) {
+        viewModelScope.launch {
+            val rowsDeleted = wordTranslationDao.deleteWordTranslationById(wordId)
+        }
     }
 }

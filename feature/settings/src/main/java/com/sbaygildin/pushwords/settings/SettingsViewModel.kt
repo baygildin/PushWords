@@ -36,6 +36,7 @@ class SettingsViewModel @Inject constructor(
 
     fun setLanguageForRiddles(language: String) {
         viewModelScope.launch {
+            Log.d("LanguageSelection", "in SettingsViewModel Language saved: $language")
             preferencesManager.saveLanguageForRiddles(language)
         }
     }

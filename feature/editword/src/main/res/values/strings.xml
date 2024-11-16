@@ -2,7 +2,5 @@
 <resources>
     <string name="toast_word_not_found">Word not found</string>
     <string name="txt_is_learned">Is Learned</string>
-    <string name="txt_save">Save</string>
-    <string name="txt_back">Back</string>
     <string name="word_not_found">Word not found</string>
 </resources>

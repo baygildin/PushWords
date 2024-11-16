@@ -7,9 +7,12 @@
     <string name="txt_original_word">Оригинальное слово</string>
     <string name="txt_translated_word">Переведённое слово</string>
     <string name="word_updated">Слово обновлено!</string>
+    <string name="difficulty_level">Уровень Сложности Слова</string>
     <string name="error_updating_word">Ошибка обновления слова</string>
     <string name="invalid_id">Неверный ID</string>
     <string name="word_not_found">Слово не найдено</string>
     <string name="add_more_words">Добавьте еще слов или откройте файл со словами</string>
     <string name="no_words_for_repetition">Нет доступных слов для повторения</string>
+    <string name="tv_btn_save">Сохранить</string>
+    <string name="btn_tv_back">Назад</string>
 </resources>

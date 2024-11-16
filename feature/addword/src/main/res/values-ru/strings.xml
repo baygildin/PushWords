@@ -8,8 +8,6 @@
     <string name="word_added">Слово добавлено!</string>
     <string name="words_imported">Слова импортированы!</string>
     <string name="ch_box_is_learned">Выучено</string>
-    <string name="tv_btn_save">Сохранить</string>
-    <string name="btn_tv_back">Назад</string>
     <string name="tv_select_english_level_to_load_words">Выберите уровень английского для загрузки слов</string>
     <string name="txt_c1_level_5">C1 (уровень 5)</string>
     <string name="txt_c2_level_6">C2 (уровень 6)</string>

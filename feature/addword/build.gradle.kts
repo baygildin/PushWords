@@ -51,6 +51,13 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.lifecycle:lifecycle-runtime-compose")
+
+    implementation("androidx.compose.material3:material3-window-size-class")
+
+    implementation("androidx.activity:activity-compose")
+    implementation(libs.androidx.runtime.livedata)
+
+
     val hilt_version = "2.51.1"
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")

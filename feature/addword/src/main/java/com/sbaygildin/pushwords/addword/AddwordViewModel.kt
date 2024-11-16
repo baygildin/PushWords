@@ -2,8 +2,6 @@ package com.sbaygildin.pushwords.addword
 
 import android.content.Context
 import android.net.Uri
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +11,7 @@ import com.sbaygildin.pushwords.data.model.DifficultyLevel
 import com.sbaygildin.pushwords.data.model.WordTranslation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -82,6 +80,9 @@ class AddwordViewModel @Inject constructor(
             }
         }
         _importSuccess.postValue(true)
+    }
+    fun resetImportSuccess() {
+        _importSuccess.value = false
     }
 
 

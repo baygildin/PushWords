@@ -7,9 +7,12 @@
     <string name="txt_original_word">Original Word</string>
     <string name="txt_translated_word">Translated Word</string>
     <string name="word_updated">Word updated!</string>
+    <string name="difficulty_level">Difficulty Level</string>
     <string name="error_updating_word">Error updating word</string>
     <string name="invalid_id">Invalid ID</string>
     <string name="word_not_found">Word not found</string>
     <string name="add_more_words">Add more words or open a file with words</string>
     <string name="no_words_for_repetition">No available words for repetition</string>
+    <string name="tv_btn_save">Save</string>
+    <string name="btn_tv_back">Back</string>
 </resources>

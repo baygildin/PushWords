@@ -133,20 +133,25 @@ class HomeFragment : Fragment() {
                                     viewModel.correctAnswer += 1
                                     playCorrectAnswerSound()
 
+                                    var learnedWord = 0
+                                    var guessedRightAwayCount = 0
+
                                     if (firstAttempt) {
                                         viewModel.guessedRightAway += 1
+                                        guessedRightAwayCount = 1
 
                                         if (!correctWord.isLearned) {
                                             viewModel.learnedWords += 1
+                                            learnedWord = 1
                                             viewModel.updateWordAsLearned(correctWord.id)
                                         }
                                     }
 
                                     viewModel.recordProgressData(
-                                        viewModel.correctAnswer,
-                                        viewModel.wrongAnswer,
-                                        viewModel.guessedRightAway,
-                                        viewModel.learnedWords
+                                        correct = 1,
+                                        wrong = 0,
+                                        guessedRightAway = guessedRightAwayCount,
+                                        learnedWords = learnedWord
                                     )
 
                                     binding?.tvLetsStartQuiz?.text = getString(R.string.txt_correct_answer)
@@ -158,9 +163,18 @@ class HomeFragment : Fragment() {
                                 } else {
                                     firstAttempt = false
                                     viewModel.wrongAnswer += 1
-                                    binding?.tvLetsStartQuiz?.text = getString(R.string.txt_correct_answer)
-                                    button?.isEnabled = false
-                                    button?.animate()
+
+                                    viewModel.recordProgressData(
+                                        correct = 0,
+                                        wrong = 1,
+                                        guessedRightAway = 0,
+                                        learnedWords = 0
+                                    )
+
+                                    binding?.tvLetsStartQuiz?.text =
+                                        getString(R.string.txt_wrong_answer)
+                                    button.isEnabled = false
+                                    button.animate()
                                         ?.translationYBy(+300f)
                                         ?.alpha(0f)
                                         ?.rotation(360f)

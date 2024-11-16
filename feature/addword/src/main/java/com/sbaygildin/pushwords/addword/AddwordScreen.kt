@@ -62,6 +62,7 @@ fun AddWordScreen(
     var isLearned by remember { mutableStateOf(false) }
     var selectedDifficultyLevel by remember { mutableStateOf(DifficultyLevel.MEDIUM) }
     val difficultyLevels = DifficultyLevel.entries.map { it.name }
+    var showErrors by remember { mutableStateOf(false) }
 
 
 
@@ -76,8 +77,7 @@ fun AddWordScreen(
     }
 
 
-    Scaffold(
-    ) { paddingValues ->
+    Scaffold { paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
@@ -104,10 +104,10 @@ fun AddWordScreen(
                         value = originalWord,
                         onValueChange = { originalWord = it },
                         label = { Text(context.getString(com.sbaygildin.pushwords.common.R.string.txt_original_word)) },
-                        isError = originalWord.isEmpty(),
+                        isError = originalWord.isBlank() && showErrors,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    if (originalWord.isEmpty()) {
+                    if (showErrors && originalWord.isBlank()) {
                         Text(
                             text = context.getString(com.sbaygildin.pushwords.common.R.string.tv_this_field_is_required),
                             color = MaterialTheme.colorScheme.error,
@@ -119,10 +119,10 @@ fun AddWordScreen(
                         value = translatedWord,
                         onValueChange = { translatedWord = it },
                         label = { Text(context.getString(com.sbaygildin.pushwords.common.R.string.txt_translated_word)) },
-                        isError = translatedWord.isEmpty(),
+                        isError = translatedWord.isBlank() && showErrors,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    if (translatedWord.isEmpty()) {
+                    if (showErrors && translatedWord.isBlank()) {
                         Text(
                             text = context.getString(com.sbaygildin.pushwords.common.R.string.tv_this_field_is_required),
                             color = MaterialTheme.colorScheme.error,
@@ -204,6 +204,8 @@ fun AddWordScreen(
                                 Toast.LENGTH_SHORT
                             ).show()
                             onBack()
+                        } else {
+                            showErrors = true
                         }
                     }) {
                         Text(text = context.getString(com.sbaygildin.pushwords.common.R.string.tv_btn_save))

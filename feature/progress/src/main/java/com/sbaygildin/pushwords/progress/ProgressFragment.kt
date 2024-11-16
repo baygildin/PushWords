@@ -20,11 +20,7 @@ class ProgressFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 ProgressScreen(
-                    viewModel = viewModel,
-                    onSwitchChange = { isDaily ->
-                        viewModel.dailyToAllTimeSwitcher.value = isDaily
-                        viewModel.updateProgressData()
-                    }
+                    viewModel = viewModel
                 )
             }
         }

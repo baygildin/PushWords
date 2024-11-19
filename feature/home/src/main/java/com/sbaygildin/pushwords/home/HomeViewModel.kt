@@ -10,6 +10,8 @@ import com.sbaygildin.pushwords.data.model.WordTranslation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,28 +28,29 @@ class HomeViewModel @Inject constructor(
     var wrongAnswer = 0 //Количество неправильных ответов
     var guessedRightAway = 0 //Количество угаданных ответов с первого раза
     var learnedWords = 0 //Количество новых изученных слов. isLearned должен быть false  у них
-    lateinit var  wordCache: Array<WordTranslation>
+
     val languageForRiddles: Flow<String> = preferencesManager.languageForRiddlesFlow
 
+    private val _wordCache = MutableStateFlow<Array<WordTranslation>>(emptyArray())
+    val wordCache: StateFlow<Array<WordTranslation>> = _wordCache
 
-
-    init {
-        updateCache()
-    }
-    fun getCachedWords(): Array<WordTranslation> {
-        return wordCache
-    }
     fun updateCache() {
         viewModelScope.launch(Dispatchers.IO) {
-            wordTranslationDao.getAllWordTranslations().collect{ wordList ->
-                wordCache = if (wordList.size > 1000) {
+            wordTranslationDao.getAllWordTranslations().collect { wordList ->
+                val updatedCache = if (wordList.size > 1000) {
                     wordList.shuffled().take(1000).toTypedArray()
                 } else {
                     wordList.toTypedArray()
                 }
+                _wordCache.value = updatedCache
             }
         }
     }
+
+    init {
+        updateCache()
+    }
+
     fun recordProgressData(correct: Int, wrong: Int, guessedRightAway: Int, learnedWords: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val progressData = ProgressData(

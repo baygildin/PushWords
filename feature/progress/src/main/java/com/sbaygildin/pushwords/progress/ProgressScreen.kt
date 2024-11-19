@@ -30,6 +30,9 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 @Composable
@@ -56,6 +59,7 @@ fun ProgressScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(bottom = 64.dp)
     ) {
         Row(modifier = Modifier.align(Alignment.CenterHorizontally)) {
             Text(
@@ -150,45 +154,43 @@ fun ProgressScreen(
                 }
             },
             update = { barChart ->
+                val totalDays = 7
+                val labels = MutableList(totalDays) { "" }
+                val dateFormat = SimpleDateFormat("EEE", Locale.getDefault())
+                val dateList = mutableListOf<Long>()
+
+                for (i in 6 downTo 0) {
+                    val calendar = Calendar.getInstance()
+                    calendar.timeInMillis = currentTime - i * 24 * 60 * 60 * 1000L
+                    calendar.set(Calendar.HOUR_OF_DAY, 0)
+                    calendar.set(Calendar.MINUTE, 0)
+                    calendar.set(Calendar.SECOND, 0)
+                    calendar.set(Calendar.MILLISECOND, 0)
+                    val dayLabel = dateFormat.format(calendar.time)
+                    labels[6 - i] = dayLabel
+                    dateList.add(calendar.timeInMillis)
+                }
+
+                val dataMap = dailyData.associateBy { data ->
+                    val calendar = Calendar.getInstance()
+                    calendar.timeInMillis = data.dateMillis
+                    calendar.set(Calendar.HOUR_OF_DAY, 0)
+                    calendar.set(Calendar.MINUTE, 0)
+                    calendar.set(Calendar.SECOND, 0)
+                    calendar.set(Calendar.MILLISECOND, 0)
+                    calendar.timeInMillis
+                }
+
                 val correctEntries = ArrayList<BarEntry>()
                 val wrongEntries = ArrayList<BarEntry>()
-                val correctAnswersPerDay = mutableMapOf<String, Float>()
-                val wrongAnswersPerDay = mutableMapOf<String, Float>()
-                val labels = listOf(
-                    context.getString(R.string.Su),
-                    context.getString(R.string.Mo),
-                    context.getString(R.string.Tu),
-                    context.getString(R.string.We),
-                    context.getString(R.string.Th),
-                    context.getString(R.string.Fr),
-                    context.getString(R.string.Sa)
-                )
 
-                labels.forEach {
-                    correctAnswersPerDay[it] = 0f
-                    wrongAnswersPerDay[it] = 0f
-                }
-
-                dailyData.forEach { data ->
-                    val dayOfWeek = when (data.day.toInt()) {
-                        0 -> context.getString(R.string.Su)
-                        1 -> context.getString(R.string.Mo)
-                        2 -> context.getString(R.string.Tu)
-                        3 -> context.getString(R.string.We)
-                        4 -> context.getString(R.string.Th)
-                        5 -> context.getString(R.string.Fr)
-                        6 -> context.getString(R.string.Sa)
-                        else -> ""
-                    }
-                    correctAnswersPerDay[dayOfWeek] =
-                        correctAnswersPerDay.getOrDefault(dayOfWeek, 0f) + data.avgCorrect
-                    wrongAnswersPerDay[dayOfWeek] =
-                        wrongAnswersPerDay.getOrDefault(dayOfWeek, 0f) + data.avgWrong
-                }
-
-                labels.forEachIndexed { index, day ->
-                    correctEntries.add(BarEntry(index.toFloat(), correctAnswersPerDay[day] ?: 0f))
-                    wrongEntries.add(BarEntry(index.toFloat(), wrongAnswersPerDay[day] ?: 0f))
+                for ((index, dateMillis) in dateList.withIndex()) {
+                    val x = index.toFloat()
+                    val data = dataMap[dateMillis]
+                    val correctValue = data?.avgCorrect ?: 0f
+                    val wrongValue = data?.avgWrong ?: 0f
+                    correctEntries.add(BarEntry(x, correctValue))
+                    wrongEntries.add(BarEntry(x, wrongValue))
                 }
 
                 val correctDataSet =
@@ -216,33 +218,38 @@ fun ProgressScreen(
                     }
 
                 val barData = BarData(correctDataSet, wrongDataSet).apply {
-                    barWidth = 0.35f
+                    barWidth = 0.3f
                 }
+
+                val groupSpace = 0.4f
+                val barSpace = 0f
 
                 barChart.apply {
                     data = barData
-                    groupBars(0f, 0.18f, 0.03f)
-                    setVisibleXRangeMaximum(7f)
-                    moveViewToX(0f)
                     xAxis.apply {
                         valueFormatter = IndexAxisValueFormatter(labels)
-                        textSize = 12f
                         granularity = 1f
                         labelCount = labels.size
                         setDrawGridLines(false)
                         position = XAxis.XAxisPosition.BOTTOM
                         setCenterAxisLabels(true)
+                        axisMinimum = 0f
+                        axisMaximum = labels.size.toFloat()
+                        textSize = 12f
                     }
                     axisLeft.apply {
                         axisMinimum = 0f
                         textSize = 14f
-                        axisMaximum = maxOf(
-                            correctAnswersPerDay.values.maxOrNull() ?: 0f,
-                            wrongAnswersPerDay.values.maxOrNull() ?: 0f
-                        ) + 5
                         setDrawGridLines(false)
+                        axisMaximum = maxOf(
+                            correctEntries.maxOfOrNull { it.y } ?: 0f,
+                            wrongEntries.maxOfOrNull { it.y } ?: 0f
+                        ) + 5
                     }
                     axisRight.isEnabled = false
+
+                    barData.barWidth = 0.3f
+                    groupBars(0f, groupSpace, barSpace)
                     invalidate()
                 }
             },
@@ -250,5 +257,7 @@ fun ProgressScreen(
                 .fillMaxWidth()
                 .weight(1f)
         )
+
+
     }
 }

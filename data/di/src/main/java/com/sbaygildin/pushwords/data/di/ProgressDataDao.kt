@@ -11,17 +11,19 @@ import com.sbaygildin.pushwords.data.model.ProgressData
 interface ProgressDataDao {
 
 
-
-
     @Query("""
-    SELECT strftime('%w', datetime(timestamp / 1000, 'unixepoch')) AS day,
-           SUM(correctAnswers) AS avgCorrect,
-           SUM(wrongAnswers) AS avgWrong
-    FROM progress_data
-    WHERE timestamp BETWEEN :startTimestamp AND :endTimestamp
-    GROUP BY day
-    ORDER BY day
-""")
+        SELECT (strftime('%s', date(timestamp / 1000, 'unixepoch')) * 1000) AS dateMillis,
+               SUM(correctAnswers) AS avgCorrect,
+               SUM(wrongAnswers) AS avgWrong
+        FROM progress_data
+        WHERE timestamp BETWEEN :startTimestamp AND :endTimestamp
+        GROUP BY dateMillis
+        ORDER BY dateMillis
+    """
+    )
+
+
+
     suspend fun getDailyAverages(startTimestamp: Long, endTimestamp: Long): List<DailyAverage>
 
     @Insert

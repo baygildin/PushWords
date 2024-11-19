@@ -15,4 +15,5 @@
     <string name="no_words_for_repetition">Нет доступных слов для повторения</string>
     <string name="tv_btn_save">Сохранить</string>
     <string name="btn_tv_back">Назад</string>
+    <string name="txt_continue">Продолжить</string>
 </resources>

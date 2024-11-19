@@ -1,5 +1,30 @@
 # PushWords
 
+### Screenshots / Скриншоты
+
+- **Progress Screen / Экран прогресса**  
+  <img src="assets/1.gif" alt="Progress Screen" width="300"/>
+
+- **Add Words to Dictionary / Экран добавления слов в словарь**  
+  <img src="assets/2.png" alt="Add Words to Dictionary" width="300"/>
+
+- **Quiz Answer Selection Screen / Экран выбора ответа (квиза)**  
+  <img src="assets/3.png" alt="Quiz Answer Selection Screen" width="300"/>
+
+- **Quiz Answer Selection Screen / Экран выбора ответа (квиза)**  
+  <img src="assets/4.png" alt="Quiz Answer Selection Screen" width="300"/>
+
+- **My Vocabulary (User's) / Мой словарь (пользователя)**  
+  <img src="assets/5.png" alt="My Dictionary" width="300"/>
+
+- **Settings Screen / Экран настроек**  
+  <img src="assets/6.png" alt="Settings Screen" width="300"/>
+
+- **Progress Screen / Экран прогресса**  
+  <img src="assets/7.png" alt="Progress Screen" width="300"/>
+
+  ---
+  
 **PushWords** is a mobile app that helps users learn English (or any other language) through quizzes and reminders. The app comes with built-in vocabulary for all English proficiency levels, from A1 to C2. You can also upload your own text files with vocabulary to learn any language. The app tracks your progress with both bar and pie charts, allowing you to see your daily, weekly, and all-time learning progress.
 
 ### Features:
@@ -30,27 +55,4 @@
 ### Использованные технологии:
 - **Jetpack Navigation**, **Hilt**, **MVVM**, **Многомодульная структура**, **WorkManager**, **Datastore**, **Room**, **Coroutines**, **MPAndroidChart**.
 
----
 
-### Screenshots / Скриншоты
-
-- **Progress Screen / Экран прогресса**  
-  <img src="assets/1.gif" alt="Progress Screen" width="300"/>
-
-- **Add Words to Dictionary / Экран добавления слов в словарь**  
-  <img src="assets/2.png" alt="Add Words to Dictionary" width="300"/>
-
-- **Quiz Answer Selection Screen / Экран выбора ответа (квиза)**  
-  <img src="assets/3.png" alt="Quiz Answer Selection Screen" width="300"/>
-
-- **Quiz Answer Selection Screen / Экран выбора ответа (квиза)**  
-  <img src="assets/4.png" alt="Quiz Answer Selection Screen" width="300"/>
-
-- **My Vocabulary (User's) / Мой словарь (пользователя)**  
-  <img src="assets/5.png" alt="My Dictionary" width="300"/>
-
-- **Settings Screen / Экран настроек**  
-  <img src="assets/6.png" alt="Settings Screen" width="300"/>
-
-- **Progress Screen / Экран прогресса**  
-  <img src="assets/7.png" alt="Progress Screen" width="300"/>

@@ -1,5 +1,6 @@
 package com.sbaygildin.pushwords.settings
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sbaygildin.pushwords.data.di.AppPreferencesManager
@@ -35,11 +36,13 @@ class SettingsViewModel @Inject constructor(
 
     fun setLanguageForRiddles(language: String) {
         viewModelScope.launch {
+            Log.d("LanguageSelection", "in SettingsViewModel Language saved: $language")
             preferencesManager.saveLanguageForRiddles(language)
         }
     }
 
     fun setNotifications(enabled: Boolean) {
+        Log.d("Notification456", "Notifications set to: $enabled")
         viewModelScope.launch {
             preferencesManager.setNotifications(enabled)
         }

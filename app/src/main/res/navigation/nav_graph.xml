@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/addword_fragment"
-        android:name="com.sbaygildin.pushwords.addword.AddwordFragment"
+        android:name="com.sbaygildin.pushwords.addword.AddWordFragment"
         android:label="Addword"
         tools:layout="@layout/fragment_addword">
 

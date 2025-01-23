@@ -19,8 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp" />
 
-
-
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChartProgress"
         android:layout_width="0dp"

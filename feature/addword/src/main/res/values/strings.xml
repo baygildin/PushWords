@@ -8,8 +8,7 @@
     <string name="word_added">Word added!</string>
     <string name="words_imported">Words imported!</string>
     <string name="ch_box_is_learned">Is Learned</string>
-    <string name="tv_btn_save">Save</string>
-    <string name="btn_tv_back">Back</string>
+
     <string name="tv_select_english_level_to_load_words">Select English Level to Load Words</string>
     <string name="txt_c1_level_5">C1 (level 5)</string>
     <string name="txt_c2_level_6">C2 (level 6)</string>

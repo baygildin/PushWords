@@ -22,13 +22,14 @@ dependencyResolutionManagement {
 
 rootProject.name = "PushWords"
 include(":app")
+include(":navigation")
+include(":data:di")
+include(":data:model")
+include(":common")
 include(":feature:home")
 include(":feature:wordlist")
 include(":feature:settings")
 include(":feature:addword")
 include(":feature:editword")
 include(":feature:progress")
-include(":navigation")
-include(":data:di")
-include(":data:model")
-include(":common")
+

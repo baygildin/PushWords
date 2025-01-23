@@ -54,16 +54,6 @@ class MainActivity : AppCompatActivity(), Navigator, NotificationController {
             val notificationManager = getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(channel)
         }
-//        lifecycleScope.launch {
-//            areNotificationsEnabled().collect { isEnabled ->
-//                if (isEnabled) {
-//                    scheduleQuizNotification()
-//                } else {
-//                    cancelQuizNotification()
-//                }
-//            }
-//
-//        }
 
         lifecycleScope.launch {
             areNotificationsEnabled().collect { isEnabled ->

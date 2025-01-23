@@ -2,14 +2,14 @@ package com.sbaygildin.pushwords.addword
 
 import android.content.Context
 import android.net.Uri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sbaygildin.pushwords.data.di.WordTranslationDao
 import com.sbaygildin.pushwords.data.model.DifficultyLevel
 import com.sbaygildin.pushwords.data.model.WordTranslation
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
@@ -18,8 +18,8 @@ import javax.inject.Inject
 class AddwordViewModel @Inject constructor(
     private val wordTranslationDao: WordTranslationDao
 ) : ViewModel() {
-    private val _importSuccess = MutableLiveData<Boolean>()
-    val importSuccess: LiveData<Boolean> = _importSuccess
+    private val _importSuccess = MutableStateFlow(false)
+    val importSuccess = _importSuccess.asStateFlow()
 
     fun saveWord(
         originalWord: String,
@@ -79,7 +79,7 @@ class AddwordViewModel @Inject constructor(
                 }
             }
         }
-        _importSuccess.postValue(true)
+        _importSuccess.value = true
     }
     fun resetImportSuccess() {
         _importSuccess.value = false
@@ -111,7 +111,7 @@ class AddwordViewModel @Inject constructor(
                 }
             }
         }
-        _importSuccess.postValue(true)
+        _importSuccess.value = true
 
     }
 }
